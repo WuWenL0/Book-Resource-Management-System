@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${book.name}"></title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bdetail.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <a class="logo"></a>
+        <div class="nav-rights">
+            <ul class="login-btns">
+                <li class="login">
+                    <a class="btn btn-primary" href="login.html">登录</a>
+                </li>
+                <li class="reg">
+                    <a class="btn btn-default" href="">注册</a>
+                </li>
+            </ul>
+            <!--            <c:if test="${!empty sessionScope.readercard}">-->
+            <!--                <ul class="login-btns">-->
+            <!--                    <li>-->
+            <!--                        <a class="aa" href="reader_detail.html">个人中心</a>-->
+            <!--                    </li>-->
+            <!--                    <li class="reg">-->
+            <!--                        <a class="aa" href="/logout.html">退出</a>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </c:if>-->
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="d-main">
+    <div cx_dolistpart="container" id="infodetails">
+        <div class="g-bookInfo">
+            <div class="m-cover">
+                <img class="u-coverImg" doruid="1465a6d7019c000" src="images/p-bigimage.jpg">
+            </div>
+            <div class="m-field" id="field" style="width: 800px;">
+                <div class="m-title" style="width: 775px;">
+                    <p class="u-title" th:text="${book.name}"></p></div>
+                <ul class="m-showField m-maxField">
+                    <li>
+                        <span class="s-gray-999">作者：</span>
+                        <span class="font" th:text="${book.author}"></span></li>
+                    <li>
+                        <span class="s-gray-999">出版社：</span>
+                        <span class="font" th:text="${book.publish}"></span>
+                        <span class="s-gray-999">出版时间：</span>
+                        <span class="font" th:text="${book.pubdate}"></span></li>
+                    <li>
+                        <span class="s-gray-999">ISBN：</span>
+                        <span class="font" th:text="${book.isbn}"></span></li>
+                    <li style="display: block;">
+                        <span class="s-gray-999">中图法分类号：</span>
+                        <span class="font" th:text="${book.classId}"></span>
+                    <li>
+                        <span class="s-gray-999">分类：</span>
+                        <span class="font" style="font-weight: initial;">中图法导航
+		            <span catenavbarpart="seperator">-&gt;</span><span id="type">G 文化、科学、教育、体育</span></span></li>
+                    <script th:inline="javascript">
+                        window.onload=function(){
+                            var t= [[${book.classId}]];
+                            switch (t.charAt(0)) {
+                                case 'A':
+                                    $("#type").html(t.charAt(0)+" 马克思主义、列宁主义、毛泽东思想、邓小平理论");
+                                    break;
+                                case 'B':
+                                    $("#type").html(t.charAt(0)+" 哲学、宗教");
+                                    break;
+                                case 'C':
+                                    $("#type").html(t.charAt(0)+" 社会科学总论");
+                                    break;
+                                case 'D':
+                                    $("#type").html(t.charAt(0)+" 政治、法律");
+                                    break;
+                                case 'E':
+                                    $("#type").html(t.charAt(0)+" 军事");
+                                    break;
+                                case 'F':
+                                    $("#type").html(t.charAt(0)+" 经济");
+                                    break;
+                                case 'G':
+                                    $("#type").html(t.charAt(0)+" 文化、科学、教育、体育");
+                                    break;
+                                case 'H':
+                                    $("#type").html(t.charAt(0)+" 语言、文字");
+                                    break;
+                                case 'I':
+                                    $("#type").html(t.charAt(0)+" 文学");
+                                    break;
+                                case 'J':
+                                    $("#type").html(t.charAt(0)+" 艺术");
+                                    break;
+                                case 'K':
+                                    $("#type").html(t.charAt(0)+" 历史、地理");
+                                    break;
+                                case 'N':
+                                    $("#type").html(t.charAt(0)+" 自然科学总论");
+                                    break;
+                                case 'O':
+                                    $("#type").html(t.charAt(0)+" 数理科学和化学");
+                                    break;
+                                case 'P':
+                                    $("#type").html(t.charAt(0)+" 天文学、地球科学");
+                                    break;
+                                case 'Q':
+                                    $("#type").html(t.charAt(0)+" 生物科学");
+                                    break;
+                                case 'R':
+                                    $("#type").html(t.charAt(0)+" 医药、卫生");
+                                    break;
+                                case 'S':
+                                    $("#type").html(t.charAt(0)+" 农业科学");
+                                    break;
+                                case 'T':
+                                    $("#type").html(t.charAt(0)+" 工业技术");
+                                    break;
+                                case 'U':
+                                    $("#type").html(t.charAt(0)+" 交通运输");
+                                    break;
+                                case 'V':
+                                    $("#type").html(t.charAt(0)+" 航空、航天");
+                                    break;
+                                case 'X':
+                                    $("#type").html(t.charAt(0)+" 环境科学、安全科学");
+                                    break;
+                                case 'Z':
+                                    $("#type").html(t.charAt(0)+" 综合性图书");
+                                    break;
+                                default:
+                                    $("#type").html(t.charAt(0)+" 未知");
+                            }
+                        };
+                    </script>
+                </ul>
+            </div>
+            <div class="m-brief">
+                <div class="u-briefName">简介：</div>
+                <div class="u-briefContent font" th:text="${book.introduction}"></div>
+            </div>
+        </div>
+        <div class="g-disk">
+            <ul class="title"><li class="selected">资源下载</li></ul>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>书名</th>
+                            <th>资源名</th>
+                            <th>类型</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="resource : ${resources}">
+                                <td th:text="${resource.resId}"></td>
+                                <td th:text="${resource.bookId}"></td>
+                                <td th:text="${resource.resName}"></td>
+                                <td th:text="${resource.resType}"></td>
+                                <td>
+                                    <div class="btn-group">
+                                            <a href="javascript:void(0)" class="btn btn-xs btn-default"  th:id="@{'play'+${resource.resId}}" title="播放视频"><i class="glyphicon glyphicon-play"></i></a>
+                                            <div th:id="@{'myModal'+${resource.resId}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                                <div class="modal-dialog" style="width: 750px;">
+                                                    <div class="modal-content" >
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <video width="720" height="480" controls><source src="" type="video/mp4"></video>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <script>
+                                                $('#play'+[[${resource.resId}]]).click(function () {
+                                                    var src = 'player.html?resId='+[[${resource.resId}]];
+                                                    $('#myModal'+[[${resource.resId}]]).modal('show');
+                                                    $('#myModal'+[[${resource.resId}]]+' video').attr('src', src);
+                                                });
+
+                                                $('#myModal'+[[${resource.resId}]]+' button').click(function () {
+                                                    $('#myModal'+[[${resource.resId}]]+' video').first().attr('src','')
+                                                });
+
+
+                                                $("#myModal"+[[${resource.resId}]]).on('hidden.bs.modal', function (){
+                                                    $("#myModal"+[[${resource.resId}]]+" video").first().attr('src','')
+                                                });
+                                            </script>
+<!--                                            <a href="viewer.html?resId=${resource.resId}" class="btn btn-xs btn-default" target="_blank" title="预览文档"><i class="glyphicon glyphicon-eye-open"></i></a>-->
+                                        <a class="btn btn-xs btn-default" th:href="@{'download.html?resId='+${resource.resId}}" title="下载资源" data-toggle="tooltip"><i class="glyphicon glyphicon-download-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="foot-bot">
+        <div class="t">
+            <p class="mid">
+                        <span>
+                            <a target="_blank" href="//www.cnki.net/gycnki/gycnki.htm">关于我们</a>
+                            <a target="_blank" href="//www.cnki.net/other/gonggao/gongsirongyu.html">CNKI 荣誉</a>
+                            <a target="_blank" href="//www.cnki.net/other/gonggao/bqsm.htm">版权公告</a>
+                            <a target="_blank" href="http://service.cnki.net/">客服中心</a>
+                            <a target="_blank" href="http://help.cnki.net/">在线咨询</a>
+                            <a target="_blank" href="http://help.cnki.net/Live800_1_2.aspx?GroupID=503&amp;PageID=101008&amp;Name=&amp;CookieName=TTKN_OnLine_800">用户建议</a>
+                            <a target="_blank" href="//piccache.cnki.net/index/CNKIRecruit/index.html">知网招聘</a>
+                            <a target="_blank" href="//piccache.cnki.net/index/images2009/other/2019/中国知网推广服务.pdf">知网推广</a>
+                        </span>
+                <span id="copyright">© 1998-2019 中国知网（CNKI）</span>
+            </p>
+            <p class="right">
+            </p>
+        </div>
+        <div class="b">
+            <span>京 ICP 证 040431 号<a target="_blank" href="//piccache.cnki.net/index/images/gb/271.jpg">网络出版服务许可证 (总)网出证(京)字第 271 号</a><a target="_blank" href="//piccache.cnki.net/index/images/gb/170001.jpg">出版物经营许可证</a> 京公网安备 11010802020460 号</span>
+            <span>《中国学术期刊（光盘版）》电子杂志社有限公司</span>
+            <span>KDN 平台基础技术由 KBASE 11.0 提供.</span>
+        </div>
+    </div>
+</div>
+
+</body>

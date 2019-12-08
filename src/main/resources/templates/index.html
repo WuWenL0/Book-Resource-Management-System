@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>随书光盘资源管理系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <a class="logo"></a>
+        <div class="nav-rights">
+            <ul class="login-btns">
+                <li class="login">
+                    <a class="btn btn-primary" href="login.html">登录</a>
+                </li>
+                <li class="reg">
+                    <a class="btn btn-default" href="">注册</a>
+                </li>
+            </ul>
+<!--            <c:if test="${!empty sessionScope.readercard}">-->
+<!--                <ul class="login-btns">-->
+<!--                    <li>-->
+<!--                        <a class="aa" href="reader_detail.html">个人中心</a>-->
+<!--                    </li>-->
+<!--                    <li class="reg">-->
+<!--                        <a class="aa" href="/logout.html">退出</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </c:if>-->
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="search">
+    <div class="searchbox">
+        <div class="mod_select">
+            <div class="select_box">
+                <span class="select_txt">书名</span>
+                <span class="select-icon"></span>
+                <ul class="option">
+                    <li>书名</li>
+                    <li>作者</li>
+                    <li>出版社</li>
+                    <li>isbn</li>
+                </ul>
+            </div>
+        </div>
+        <form action="search.html" method="get" accept-charset="UTF-8">
+            <input type="hidden" name="searchType" value="name" id="select_value">
+            <input type="text" name="searchWord" id="searchPlaceholder" class="import" placeholder="请输入书名">
+            <input type="submit" value="" class="btn-search">
+        </form>
+    </div>
+    <script>
+        $(function(){
+            $(".select_box").click(function(event){
+                event.stopPropagation();
+                $(this).find(".option").toggle();
+                $(this).parent().siblings().find(".option").hide();
+            });
+            $(document).click(function(event){
+                var eo=$(event.target);
+                if($(".select_box").is(":visible") && eo.attr("class")!="option" && !eo.parent(".option").length)
+                    $('.option').hide();
+            });
+            $(".option li").click(function(){
+                var check_value=$(this).text();
+                var smValue = $('.option li:eq(0)').html();
+                var zzValue = $('.option li:eq(1)').html();
+                var cbValue = $('.option li:eq(2)').html();
+                $(this).parent().siblings(".select_txt").text(check_value);
+                $("#select_value").val(check_value);
+                if(check_value == smValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入书名');
+                    $('#select_value').prop('value','name');
+                }else if(check_value == zzValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入作者名');
+                    $('#select_value').prop('value','author');
+                }else if(check_value == cbValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入出版社名称');
+                    $('#select_value').prop('value','publish');
+                }else {
+                    $('#searchPlaceholder').prop('placeholder','请输入ISBN');
+                    $('#select_value').prop('value','isbn');
+                }
+            });
+        })
+    </script>
+</div>
+<div class="product-content">
+    <div class="unit">
+        <h4>中图分类法</h4>
+        <ul>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=A">马克思主义、列宁主义、毛泽东思想、邓小平理论</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=B">哲学、宗教</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=C">社会科学总论</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=D">政治、法律</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=E">军事</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=F">经济</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=G">文化、科学、教育、体育</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=H">语言、文字</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=I">文学</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=J">艺术</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=K">历史、地理</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=N">自然科学总论</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=O">数理科学和化学</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=P">天文学、地球科学</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=Q">生物科学</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=R">医药、卫生</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=S">农业科学</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=T">工业技术</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=U">交通运输</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=V">航空、航天</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=X">环境科学、安全科学</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=Z">综合性图书</a></li>
+            <li><a href="reader_querybook_do.html?searchType=class_id&searchWord=">其他</a></li>
+        </ul>
+    </div>
+</div>
+<div class="message">
+    <div class="message-content">
+        <div class="message-top-box">
+            <div class="message-news">
+                <h4>
+                    <span>通知公告</span>
+                    <a class="more" href="//www.cnki.net/subpages/News.html" target="_blank">更多&nbsp;&gt;</a>
+                </h4>
+                <ul>
+                    <li th:each="notice : ${notices}">
+                        <a th:href="@{'notice_detail.html?id='+${notice.id}}" target="_blank" th:title="${notice.name}">
+                            <h6 th:text="${notice.name}"></h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="message-top-box">
+            <div class="message-news">
+                <h4>
+                    <span>下载排行</span>
+                    <a class="more" href="//www.cnki.net/subpages/News.html" target="_blank">更多&nbsp;&gt;</a>
+                </h4>
+                <ul>
+                    <li th:each="resource : ${resources}">
+                        <a th:href="@{'book_detail.html?bookId='+${resource.bookId}}" target="_blank" th:title="${resource.resName}">
+                            <h6 th:text="${resourceStat.index+1} +'.  '+ ${resource.resName}"></h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="message-top-box">
+            <div class="message-news">
+                <h4>
+                    <span>图书推荐</span>
+                    <a class="more" href="//www.cnki.net/subpages/News.html" target="_blank">更多&nbsp;&gt;</a>
+                </h4>
+                <ul>
+                    <li th:each="book : ${books}">
+                        <a th:href="@{'book_detail.html?bookId='+${book.bookId}}" target="_blank" th:title="${book.name}">
+                            <h6 th:text="${bookStat.index+1} +'.  '+ ${book.name}"></h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="banner"></div>
+<div class="footer">
+    <div class="foot-bot">
+        <div class="t">
+            <p class="mid">
+                        <span>
+                            <a target="_blank" href="//www.cnki.net/gycnki/gycnki.htm">关于我们</a>
+                            <a target="_blank" href="//www.cnki.net/other/gonggao/gongsirongyu.html">CNKI 荣誉</a>
+                            <a target="_blank" href="//www.cnki.net/other/gonggao/bqsm.htm">版权公告</a>
+                            <a target="_blank" href="http://service.cnki.net/">客服中心</a>
+                            <a target="_blank" href="http://help.cnki.net/">在线咨询</a>
+                            <a target="_blank" href="http://help.cnki.net/Live800_1_2.aspx?GroupID=503&amp;PageID=101008&amp;Name=&amp;CookieName=TTKN_OnLine_800">用户建议</a>
+                            <a target="_blank" href="//piccache.cnki.net/index/CNKIRecruit/index.html">知网招聘</a>
+                            <a target="_blank" href="//piccache.cnki.net/index/images2009/other/2019/中国知网推广服务.pdf">知网推广</a>
+                        </span>
+                <span id="copyright">© 1998-2019 中国知网（CNKI）</span>
+            </p>
+            <p class="right">
+            </p>
+        </div>
+        <div class="b">
+            <span>京 ICP 证 040431 号<a target="_blank" href="//piccache.cnki.net/index/images/gb/271.jpg">网络出版服务许可证 (总)网出证(京)字第 271 号</a><a target="_blank" href="//piccache.cnki.net/index/images/gb/170001.jpg">出版物经营许可证</a> 京公网安备 11010802020460 号</span>
+            <span>《中国学术期刊（光盘版）》电子杂志社有限公司</span>
+            <span>KDN 平台基础技术由 KBASE 11.0 提供.</span>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

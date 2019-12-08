@@ -1,0 +1,150 @@
+.banner{
+	height: 200px;
+}
+.searchbox {
+	margin-top: 50px;
+}
+.search_main {
+    height: auto;
+    width: 1200px;
+    margin: 15px auto;
+}
+.s-sort {
+    height: 37px;
+    width: 1200px;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.sort {
+    cursor: pointer;
+    float: left;
+    height: 38px;
+    width: 95px;
+    font-size: 14px;
+    color: #333;
+    line-height: 38px;
+    border-right: 1px solid #ddd;
+    padding-left: 15px;
+}
+.top_pages {
+    padding: 9px 10px 9px 0;
+}
+.f_right {
+    float: right;
+}
+.sort4 {
+    font-size: 12px;
+    float: right;
+    line-height: 32px;
+    margin-right: 20px;
+}
+.s-sort .sort i {
+    display: inline-block;
+    width: 8px;
+    height: 12px;
+    margin-left: 6px;
+}
+
+.down{
+	background: url('../images/down.png') center no-repeat;
+	background-size: 8px 12px;
+}
+.down-s{
+	background: url('../images/down-s.png') center no-repeat;
+	background-size: 8px 12px;
+}
+.up{
+	background: url('../images/up.png') center no-repeat;
+	background-size: 8px 12px;
+}
+.up-s{
+	background: url('../images/down.png') center no-repeat;
+	background-size: 8px 12px;
+}
+
+/* 列表页 */
+
+.s-page {
+    height: 185px;
+    border-bottom: 1px dashed #ddd;
+    padding: 15px 0;
+}
+a {
+    color: #333;
+    text-decoration: none;
+}
+.s-page img {
+    width: 114px;
+    height: 156px;
+    overflow: hidden;
+    float: left;
+    margin-right: 15px;
+    border: 1px solid #ddd;
+}
+.s-detailed{
+
+}
+.s-detailed span {
+    color: #999;
+}
+.s-page p {
+    line-height: 20px;
+    font-size: 13px;
+    color: #666;
+}
+.s-summary a {
+    color: #0063ca;
+}
+.t1 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 36px;
+}
+
+/* 翻页 */
+
+.m-page {
+    display: table;
+    width: 100%;
+    font-size: 14px;
+    font-family: "Microsoft yahei";
+    margin: 25px auto;
+}
+.m-page ul {
+    display: table-cell;
+    text-align: center;
+}
+.m-page li {
+    display: inline;
+    margin: 0 2px;
+}
+.m-page .disabled a, .m-page .disabled a:hover {
+    text-decoration: none;
+    color: #999;
+    border-color: #ddd;
+    cursor: default;
+}
+
+.m-page .topage {
+    width: 50px;
+    margin: 0 3px;
+    vertical-align: top;
+}
+.m-page .active a {
+    color: #fff;
+    background: #0063ca;
+    border: 1px solid #0063ca;
+}
+.m-page a, .m-page .topage {
+    display: inline-block;
+    padding: 5px 10px;
+    line-height: 18px;
+    text-align: center;
+    border: 1px solid #ededed;
+    border-radius: 3px;
+}
+.m-page ul {
+    display: table-cell;
+    text-align: center;
+}

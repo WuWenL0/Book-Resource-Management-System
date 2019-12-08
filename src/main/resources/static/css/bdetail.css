@@ -1,0 +1,118 @@
+.d-main {
+    width: 1200px;
+    margin: 0 auto;
+}
+.g-bookInfo {
+    border: 1px solid #e5e5e5;
+    border-top: 2px solid #e5e5e5;
+    margin-top: 20px;
+    padding-bottom: 6px;
+    min-height: 325px;
+    /* overflow: hidden; */
+    font-size: 13px;
+    color: #666;
+}
+.m-cover {
+    float: left;
+    padding: 20px 20px 0 20px;
+}
+.u-coverImg {
+    width: 182px;
+    height: 253px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+.m-field {
+    position: relative;
+    width: 800px;
+    float: left;
+    margin-top: 20px;
+}
+.m-title {
+    position: relative;
+    width: 775px;
+    border-bottom: 1px dashed #ddd;
+}
+.u-title {
+    padding-right: 150px;
+    padding-bottom: 10px;
+    font-size: 22px;
+    color: #333;
+    font-family: "Microsoft YaHei";
+}
+.m-showField {
+    /* height: 195px; */
+    margin: 10px 0;
+    font-size: 13px;
+    overflow: hidden;
+}
+.m-showField li {
+    min-height: 24px;
+    line-height: 24px;
+    width: 100%;
+}
+.s-gray-999 {
+    color: #999;
+}
+.m-showField li span.font {
+    margin-right: 5px;
+}
+.m-brief {
+    width: 1160px;
+    position: relative;
+    line-height: 24px;
+    overflow: hidden;
+    margin-left: 20px;
+}
+.u-briefName {
+    position: absolute;
+    padding-top: 10px;
+}
+.u-briefContent {
+    padding-top: 10px;
+    padding-left: 45px;
+    overflow: hidden;
+}
+.g-disk {
+    position: relative;
+    margin: 20px 0;
+    padding: 0 15px 20px;
+    border: 1px solid #e5e5e5;
+    height: 500px;
+}
+.title {
+    border-bottom: 1px solid #eeeeee;
+}
+.title li.selected {
+    color: #0063ca;
+    border-bottom: 3px solid #0063ca;
+}
+.title li {
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+    width: 101px;
+    text-align: center;
+    height: 45px;
+    line-height: 50px;
+    border-bottom: 3px solid transparent;
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
+    cursor: pointer;
+}
+.m-diskInfo {
+    float: left;
+    width: 1170px;
+}
+.m-diskImg {
+    float: left;
+    width: 88px;
+    height: 88px;
+    margin: 25px 30px 20px 20px;
+    background-position: -90px 0;
+}
+.sprite-main {
+    display: inline-block;
+    background: url(../images/sp_main.png) no-repeat;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>图书列表</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid p-t-15">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div th:if="${not #strings.isEmpty(succ)}" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong th:text="${succ}"></strong>
+            </div>
+            <div th:if="${not #strings.isEmpty(error)}" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong th:text="${error}"></strong>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-toolbar clearfix">
+                    <form class="pull-right search-bar" method="get" action="#!" role="form">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <input type="hidden" name="search_field" id="search-field" value="title">
+                                <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                                    标题 <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                                </ul>
+                            </div>
+                            <input type="text" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>读者号</th>
+                                <th>姓名</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="readerCard : ${pageInfo.list}">
+<!--                                    <td>-->
+<!--                                        <label class="lyear-checkbox checkbox-primary">-->
+<!--                                            <input type="checkbox" name="ids[]" value="1"><span></span>-->
+<!--                                        </label>-->
+<!--                                    </td>-->
+                                    <td th:text="${readerCard.readerId}"></td>
+                                    <td th:text="${readerCard.name}"></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-xs btn-default" href="javascript:void(0)" title="删除" data-toggle="tooltip" onclick="showDeleteModal(this)"><i class="mdi mdi-window-close"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="modal fade" id="delcfmOverhaul">
+                            <div class="modal-dialog">
+                                <div class="modal-content message_align">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title">提示</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>您确认要删除该条信息吗？</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">取消</button>
+                                        <a class="btn btn-primary"
+                                                id="deleteHaulBtn">确认</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pagination">
+                        <li><a th:href="@{'admin_allreaders.html'}">«</a></li>
+                        <li th:each="nav : ${pageInfo.navigatepageNums}" th:class="${nav == pageInfo.pageNum}?'active'">
+                            <a th:href="@{'admin_allreaders.html?pageNum='+${nav}}" th:text="${nav}"></a>
+                        </li>
+                        <li><a th:href="@{'admin_allreaders.html?pageNum='+${pageInfo.pages}}">»</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+<script type="text/javascript">
+    // 打开询问是否删除的模态框并设置需要删除的大修的ID
+    function showDeleteModal(obj) {
+        var $tds = $(obj).parent().parent().parent().children();// 获取到所有列
+        var delete_id = $($tds[0]).text();// 获取隐藏的ID
+        $("#deleteHaulBtn").attr("href","admin_reader_delete.html?readerId="+delete_id);// 将模态框中需要删除的大修的ID设为需要删除的ID
+        $("#delcfmOverhaul").modal({
+            backdrop : 'static',
+            keyboard : false
+        });
+    }
+    $(function(){
+        $('.search-bar .dropdown-menu a').click(function() {
+            var field = $(this).data('field') || '';
+            $('#search-field').val(field);
+            $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
+        });
+    });
+</script>
+</body>
+</html>

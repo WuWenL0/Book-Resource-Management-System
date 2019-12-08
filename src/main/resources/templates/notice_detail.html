@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${notice.name} + ' - 随书光盘资源管理系统'"></title>
+    <base href="<%=basePath %>" >
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/notice.css">
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <a class="logo"></a>
+        <div class="nav-rights">
+            <ul class="login-btns">
+                <li class="login">
+                    <a class="btn btn-primary" href="login.html">登录</a>
+                </li>
+                <li class="reg">
+                    <a class="btn btn-default" href="">注册</a>
+                </li>
+            </ul>
+            <!--            <c:if test="${!empty sessionScope.readercard}">-->
+            <!--                <ul class="login-btns">-->
+            <!--                    <li>-->
+            <!--                        <a class="aa" href="reader_detail.html">个人中心</a>-->
+            <!--                    </li>-->
+            <!--                    <li class="reg">-->
+            <!--                        <a class="aa" href="/logout.html">退出</a>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </c:if>-->
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="notice">
+    <h2 align="center" th:text="${notice.name}"></h2>
+    <div align="center">
+        <font th:text="'发布日期：'+${#dates.format(notice.creatTime,'yyyy-MM-dd HH:mm:ss')}" ></font>
+    </div>
+    <div class="context" th:utext="${notice.context}">
+    </div>
+    <hr>
+</div>
+<div class="footer">
+    <div class="foot-bot">
+        <div class="t">
+            <p class="mid">
+                        <span>
+                            <a target="_blank" href="//www.cnki.net/gycnki/gycnki.htm">关于我们</a>
+                            <a target="_blank" href="//www.cnki.net/other/gonggao/gongsirongyu.html">CNKI 荣誉</a>
+                            <a target="_blank" href="//www.cnki.net/other/gonggao/bqsm.htm">版权公告</a>
+                            <a target="_blank" href="http://service.cnki.net/">客服中心</a>
+                            <a target="_blank" href="http://help.cnki.net/">在线咨询</a>
+                            <a target="_blank" href="http://help.cnki.net/Live800_1_2.aspx?GroupID=503&amp;PageID=101008&amp;Name=&amp;CookieName=TTKN_OnLine_800">用户建议</a>
+                            <a target="_blank" href="//piccache.cnki.net/index/CNKIRecruit/index.html">知网招聘</a>
+                            <a target="_blank" href="//piccache.cnki.net/index/images2009/other/2019/中国知网推广服务.pdf">知网推广</a>
+                        </span>
+                <span id="copyright">© 1998-2019 中国知网（CNKI）</span>
+            </p>
+            <p class="right">
+            </p>
+        </div>
+        <div class="b">
+            <span>京 ICP 证 040431 号<a target="_blank" href="//piccache.cnki.net/index/images/gb/271.jpg">网络出版服务许可证 (总)网出证(京)字第 271 号</a><a target="_blank" href="//piccache.cnki.net/index/images/gb/170001.jpg">出版物经营许可证</a> 京公网安备 11010802020460 号</span>
+            <span>《中国学术期刊（光盘版）》电子杂志社有限公司</span>
+            <span>KDN 平台基础技术由 KBASE 11.0 提供.</span>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+.notice h2{
+	font-size: 24px;
+    text-align: center;
+    padding-top: 35px;
+    line-height: 40px;
+    font-family: 黑体;
+}
+.notice font {
+    font-size: 12px;
+    color: #999;
+    height: 70px;
+    /* display: block; */
+    text-align: center;
+    line-height: 70px;
+}
+
+.context{
+	width: 1140px;
+	margin:  0 auto;
+}
+.notice hr{
+	margin:0 auto;
+	margin-top: 10px;
+	width: 1140px;
+	margin-bottom: 50px;
+	border-bottom: 1px solid rgb(210, 210, 210);
+}

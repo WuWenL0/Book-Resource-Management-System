@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>首页 - 随书光盘资源管理系统</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid p-t-15">
+
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-primary">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">图书总数</p>
+                        <p class="h3 text-white m-b-0" th:text="${bookcount}"></p>
+                    </div>
+                    <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-currency-cny fa-1-5x"></i></span> </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-danger">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">用户总数</p>
+                        <p class="h3 text-white m-b-0" th:text="${readercount}"></p>
+                    </div>
+                    <div class = "pull-left "> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-account fa-1-5x"></i></span> </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-success">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">下载总量</p>
+                        <p class="h3 text-white m-b-0" th:text="${downcount}"></p>
+                    </div>
+                    <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-arrow-down-bold fa-1-5x"></i></span> </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-purple">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">通知总数</p>
+                        <p class="h3 text-white m-b-0" th:text="${noticecount}"></p>
+                    </div>
+                    <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-comment-outline fa-1-5x"></i></span> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--    <div class="row">-->
+
+<!--        <div class="col-lg-12">-->
+<!--            <div class="card">-->
+<!--                <div class="card-header">-->
+<!--                    <h4>下载记录</h4>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <div class="table-responsive">-->
+<!--                        <table class="table table-hover">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>用户</th>-->
+<!--                                <th>IP</th>-->
+<!--                                <th>书名期</th>-->
+<!--                                <th>资源名</th>-->
+<!--                                <th>下载时间</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <c:forEach items="${downloadLogs}" var="downloadLog">-->
+<!--                                <tr>-->
+<!--                                    <td>${downloadLog.id}</td>-->
+<!--                                    <td>${downloadLog.ip}</td>-->
+<!--                                    <td>${downloadLog.bookName}</td>-->
+<!--                                    <td>${downloadLog.resName}</td>-->
+<!--                                    <td>${downloadLog.downloadTime}</td>-->
+<!--                                </tr>-->
+<!--                            </c:forEach>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+
+</body>
+</html>
