@@ -42,7 +42,7 @@ public class ReaderController {
     @PostMapping("/admin/admin_reader_add_do.html")
     public String adminAddReaderDo(ReaderCard readerCard , RedirectAttributes redirectAttributes){
         try {
-            readerCard.setPasswd("123456");
+            readerCard.setPasswd("bb8ce661128c8341533f10b34576d49ecac94c0b31edc6864f13bb76171c92e9");//123456
             readerMapper.insertCard(readerCard);
             readerMapper.insertInfo(readerCard);
         }catch (Exception e){

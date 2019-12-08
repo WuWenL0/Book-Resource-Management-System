@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.imau.brms.entity.Admin;
 import com.imau.brms.mapper.AdminMapper;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,8 @@ public class AdminController {
     @RequestMapping("/admin/admin_add_do.html")
     public String adminAddDo(Admin admin , RedirectAttributes redirectAttributes){
         try {
+            admin.setPassword(new SimpleHash("SHA-256",admin.getPassword(),null,20).toHex());
+            System.out.println(admin.getPassword());
             admin.setPerms("admin");
             adminMapper.insert(admin);
         } catch (Exception e) {

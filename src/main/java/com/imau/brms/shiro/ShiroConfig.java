@@ -1,6 +1,7 @@
 package com.imau.brms.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,12 +40,29 @@ public class ShiroConfig {
         securityManager.setRealm(adminRealm);
         return securityManager;
     }
+
+    @Bean("credentialsMatcher")
+    public HashedCredentialsMatcher credentialsMatcher(){
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        //加密算法的名字，也可以设置MD5等其他加密算法名字
+        credentialsMatcher.setHashAlgorithmName("SHA-256");
+        //加密次数
+        credentialsMatcher.setHashIterations(20);
+        //加密为哈希
+        credentialsMatcher.setStoredCredentialsHexEncoded(true);
+
+        return credentialsMatcher;
+    }
+
     /*
-        Realm
+        adminRealm
      */
+
     @Bean("adminRealm")
     public AdminRealm getRealm() {
-        return new AdminRealm();
+        AdminRealm adminRealm = new AdminRealm();
+        adminRealm.setCredentialsMatcher(credentialsMatcher());
+        return adminRealm;
     }
 
     @Bean(name = "shiroDialect")
