@@ -1808,9 +1808,6 @@ function webViewerInitialized() {
   var appConfig = PDFViewerApplication.appConfig;
   var file;
   var queryString = document.location.search.substring(1);
-  console.log(queryString);
-  queryString = decodeURI(queryString);
-  console.log(queryString);
   var params = (0, _ui_utils.parseQueryString)(queryString);
   file = 'file' in params ? params.file : _app_options.AppOptions.get('defaultUrl');
   validateFileURL(file);
@@ -4237,7 +4234,7 @@ var defaultOptions = {
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   defaultUrl: {
-    value: 'compressed.tracemonkey-pldi-09.pdf',
+    value: '',
     kind: OptionKind.VIEWER
   },
   defaultZoomValue: {

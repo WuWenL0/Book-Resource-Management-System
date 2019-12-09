@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/reader.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <a class="logo"></a>
+        <div class="nav-rights">
+            <ul class="login-btns">
+                <li class="reg">
+                    <a class="btn btn-default" href="/logout.html">退出</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="header">
+    <div class="user-info">
+        <div class="w1200">
+            <div class="user-headface">
+                <img src="images/user_face.jpg">
+            </div>
+            <div class="user-account">
+                <p class="tip" th:text="@{'欢迎您，'+${session.READER.name}}"></p>
+                <p class="account">
+                    <span th:text="@{'帐户名：'+${session.READER.name}}"></span>
+                    <span th:text="@{'用户：'+${session.READER.readerId}}"></span>
+                </p>
+            </div>
+<!--            <div class="user-modify">-->
+<!--                <a href="reader_info_change.html">修改资料&gt;</a>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
+<div class="main w1200">
+    <div class="left">
+        <ul>
+            <li>
+                <a href="#" class="active">
+                    <i class="glyphicon glyphicon-envelope"></i>
+                    系统消息
+                </a>
+            </li>
+            <li>
+                <a href="download_history.html">
+                    <i class="glyphicon glyphicon-time"></i>
+                    下载历史
+                </a>
+            </li>
+            <li>
+                <a href="reader_info_change.html">
+                    <i class="glyphicon glyphicon-user"></i>
+                    修改资料
+                </a>
+            </li>
+            <li>
+                <a href="reader_pwd_change.html">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    修改密码
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="right">
+        <div class="tap">
+            <span>系统消息</span>
+        </div>
+        <div class="container">
+            <div class="no-doc">
+                <img src="images/no_doc.jpg">
+                <p>您还没有消息哦~</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

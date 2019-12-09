@@ -2,11 +2,12 @@ package com.imau.brms.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.imau.brms.dto.ResourseDTO;
+import com.imau.brms.annotation.DownloadControllerLog;
+import com.imau.brms.dto.ResourceDTO;
 import com.imau.brms.entity.Book;
 import com.imau.brms.entity.Resource;
 import com.imau.brms.mapper.BookMapper;
-import com.imau.brms.mapper.ResourseMapper;
+import com.imau.brms.mapper.ResourceMapper;
 import com.imau.brms.service.ResourseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class ResourseController {
+public class ResourceController {
 
     @Value("${upload.profile}")
     private String BASE_PATH;
 
     @Autowired
-    private ResourseMapper resourseMapper;
+    private ResourceMapper resourceMapper;
 
     @Autowired
     private BookMapper bookMapper;
@@ -60,7 +61,7 @@ public class ResourseController {
      */
     @GetMapping("/admin/admin_resource_detail.html")
     public String adminBookAllResoursesByBookId(@RequestParam("bookId") Integer bookId , Model model){
-        ArrayList<ResourseDTO> list = resourseService.list(bookId);
+        ArrayList<ResourceDTO> list = resourseService.list(bookId);
         model.addAttribute("bookId",bookId);
         model.addAttribute("resources",list);
         return "admin/admin_resource_detail";
@@ -72,10 +73,10 @@ public class ResourseController {
     @GetMapping("/admin/admin_resource_delete.html")
     public String adminDeleteResourceDo(Integer bookId , Integer resId , RedirectAttributes redirectAttributes){
         try{
-            Resource resource = resourseMapper.findResourceByResId(resId);
+            Resource resource = resourceMapper.findResourceByResId(resId);
             File delFile = new File(resource.getResSrc()+resource.getResName());
             delFile.delete();
-            resourseMapper.delete(resId);
+            resourceMapper.delete(resId);
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error","资源删除失败！");
             return "redirect:/admin/admin_resource_detail.html?bookId="+bookId;
@@ -109,9 +110,10 @@ public class ResourseController {
                     Resource resource = new Resource();
                     resource.setBookId(bookId);
                     resource.setResName(file.getOriginalFilename());
+                    resource.setResSize(file1.length());
                     resource.setResSrc(BASE_PATH + bookId + "/");
                     resource.setResType(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1));
-                    resourseMapper.insert(resource);
+                    resourceMapper.insert(resource);
                     redirectAttributes.addFlashAttribute("succ","资源添加成功");
                 } catch (Exception e) {
                     redirectAttributes.addFlashAttribute("succ","上传文件失败 " + i + " => " + e.getMessage());
@@ -141,7 +143,7 @@ public class ResourseController {
     @RequestMapping(value = "/admin/download.html", method = RequestMethod.GET)
     public void getDownload(Integer resId, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         // Get your file stream from wherever.
-        Resource resource = resourseMapper.findResourceByResId(resId);
+        Resource resource = resourceMapper.findResourceByResId(resId);
         String fullPath = resource.getResSrc() + resource.getResName();
         File downloadFile = new File(fullPath);
 
@@ -237,10 +239,12 @@ public class ResourseController {
     /*
         前台读者下载功能
      */
+    @DownloadControllerLog()
     @GetMapping("/download.html")
     public void getReaderDownload(Integer resId, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         // Get your file stream from wherever.
-        Resource resource = resourseMapper.findResourceByResId(resId);
+        Resource resource = resourceMapper.findResourceByResId(resId);
+        resourceMapper.addResourceDownNum(resId , resourceMapper.getResourceDownNum(resId)+1);
         String fullPath = resource.getResSrc() + resource.getResName();
         File downloadFile = new File(fullPath);
 
@@ -338,7 +342,7 @@ public class ResourseController {
      */
     @GetMapping("player.html")
     public void readerPlayerVideo(Integer resId ,HttpServletRequest request , HttpServletResponse response) throws IOException {
-        Resource resource = resourseMapper.findResourceByResId(resId);
+        Resource resource = resourceMapper.findResourceByResId(resId);
         String fullPath = resource.getResSrc() + resource.getResName();
         File file = new File(fullPath);
         Long fileSize = file.length();
@@ -405,5 +409,24 @@ public class ResourseController {
     /*
         文档在线浏览
      */
+
+    @RequestMapping(value = "/preview")
+    public void viewerPDF(Integer resId ,HttpServletRequest request , HttpServletResponse response) {
+        Resource resource = resourceMapper.findResourceByResId(resId);
+        String fullPath = resource.getResSrc() + resource.getResName();
+        File file = new File(fullPath);
+        if (file.exists()) {
+            byte[] data = null;
+            try {
+                FileInputStream input = new FileInputStream(file);
+                data = new byte[input.available()];
+                input.read(data);
+                response.getOutputStream().write(data);
+                input.close();
+            } catch (Exception e) {
+                System.out.println("pdf文件处理异常...");
+            }
+        }
+    }
 
 }

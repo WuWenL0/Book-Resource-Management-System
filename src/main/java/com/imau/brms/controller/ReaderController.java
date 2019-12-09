@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +20,15 @@ public class ReaderController {
 
     @Autowired
     private ReaderMapper readerMapper;
+
+    /*
+        前台读者详情
+     */
+    @RequestMapping("/reader_detail.html")
+    public String toReaderDetail(){
+        return "reader_detail";
+    }
+
 
     /*
         管理员所有读者列表

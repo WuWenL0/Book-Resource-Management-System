@@ -1,6 +1,7 @@
 package com.imau.brms.mapper;
 
 import com.imau.brms.entity.ReaderCard;
+import com.imau.brms.entity.ReaderInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -28,5 +29,12 @@ public interface ReaderMapper {
     @Select("SELECT reader_id,name FROM db_reader_card")
     ArrayList<ReaderCard> selectAllReaderCard();
 
+    @Select("SELECT COUNT(*) FROM db_reader_card WHERE reader_id = #{readerId} and passwd = #{passwd}")
+    Integer hasMatchReader(Long readerId , String passwd);
 
+    @Select("SELECT * FROM db_reader_card WHERE reader_id = #{readerId}")
+    ReaderCard findReaderCardByUserId(Long id);
+
+    @Select("SELECT * FROM db_reader_info WHERE reader_id = #{readerId}")
+    ReaderInfo findReaderInfoByReaderId(Long readerId);
 }

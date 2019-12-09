@@ -2,10 +2,12 @@ package com.imau.brms.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.imau.brms.dto.ResourceDTO;
 import com.imau.brms.entity.Book;
 import com.imau.brms.entity.Resource;
 import com.imau.brms.mapper.BookMapper;
-import com.imau.brms.mapper.ResourseMapper;
+import com.imau.brms.mapper.ResourceMapper;
+import com.imau.brms.service.ResourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,7 @@ public class BookController {
     private BookMapper bookMapper;
 
     @Autowired
-    private ResourseMapper resourseMapper;
+    private ResourseService resourseService;
     /*
         管理员添加图书
      */
@@ -113,9 +115,9 @@ public class BookController {
     @RequestMapping("/book_detail.html")
     public String readerBookDetail(Integer bookId , Model model){
         Book book = bookMapper.findBookById(bookId);
-        ArrayList<Resource> resources = resourseMapper.findResourcesByBookId(book.getBookId());
+        ArrayList<ResourceDTO> resourceDTOS = resourseService.list(bookId);
         model.addAttribute("book",book);
-        model.addAttribute("resources", resources);
+        model.addAttribute("resources", resourceDTOS);
         return "book_detail";
     }
 

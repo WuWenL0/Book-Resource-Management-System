@@ -1,17 +1,14 @@
 package com.imau.brms.controller;
 
 import com.imau.brms.entity.Book;
+import com.imau.brms.entity.DownloadLog;
 import com.imau.brms.entity.Notice;
 import com.imau.brms.entity.Resource;
-import com.imau.brms.mapper.BookMapper;
-import com.imau.brms.mapper.IndexMapper;
-import com.imau.brms.mapper.NoticeMapper;
-import com.imau.brms.mapper.ResourseMapper;
+import com.imau.brms.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
@@ -25,15 +22,18 @@ public class IndexController {
     private NoticeMapper noticeMapper;
 
     @Autowired
-    private ResourseMapper resourseMapper;
+    private ResourceMapper resourceMapper;
+
+    @Autowired
+    private DownloadLogMapper downloadLogMapper;
 
     @Autowired
     private BookMapper bookMapper;
 
-    @GetMapping("/")
+    @GetMapping({"/","/index","/index.html"})
     public String toIndex(Model model){
         ArrayList<Notice> allNotice = noticeMapper.getAllNotice();
-        ArrayList<Resource> downSumSort = resourseMapper.getResourceDownSumSort();
+        ArrayList<Resource> downSumSort = resourceMapper.getResourceDownSumSort();
         ArrayList<Book> recommendBooks = bookMapper.getRecommendBooks();
         model.addAttribute("notices", allNotice);
         model.addAttribute("resources", downSumSort);
@@ -60,10 +60,12 @@ public class IndexController {
         int downCount = indexMapper.getDownCount();
         int noticeCount = indexMapper.getNoticeCount();
         int readerCount = indexMapper.getReaderCount();
+        ArrayList<DownloadLog> downloadLogs = downloadLogMapper.selectAllLog();
         model.addAttribute("bookcount", bookCount);
         model.addAttribute("downcount", downCount);
         model.addAttribute("readercount", readerCount);
         model.addAttribute("noticecount", noticeCount);
+        model.addAttribute("downloadLogs", downloadLogs);
         return "admin/admin_main";
     }
 }

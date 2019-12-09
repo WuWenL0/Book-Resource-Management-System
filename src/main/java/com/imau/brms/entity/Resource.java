@@ -9,5 +9,6 @@ public class Resource {
     private String resName;
     private String resSrc;
     private String resType;
+    private Long resSize;
     private Integer downSum;
 }

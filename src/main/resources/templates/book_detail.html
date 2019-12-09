@@ -15,7 +15,7 @@
     <div class="top-context">
         <a class="logo"></a>
         <div class="nav-rights">
-            <ul class="login-btns">
+            <ul class="login-btns" th:if="${#strings.isEmpty(session.READER)}">
                 <li class="login">
                     <a class="btn btn-primary" href="login.html">登录</a>
                 </li>
@@ -23,16 +23,14 @@
                     <a class="btn btn-default" href="">注册</a>
                 </li>
             </ul>
-            <!--            <c:if test="${!empty sessionScope.readercard}">-->
-            <!--                <ul class="login-btns">-->
-            <!--                    <li>-->
-            <!--                        <a class="aa" href="reader_detail.html">个人中心</a>-->
-            <!--                    </li>-->
-            <!--                    <li class="reg">-->
-            <!--                        <a class="aa" href="/logout.html">退出</a>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </c:if>-->
+            <ul class="login-btns" th:if="not ${#strings.isEmpty(session.READER)}">
+                <li>
+                    <a class="aa" href="reader_detail.html">个人中心</a>
+                </li>
+                <li class="reg">
+                    <a class="aa" href="/logout.html">退出</a>
+                </li>
+            </ul>
         </div>
         <div class="nav">
             <ul>
@@ -162,19 +160,21 @@
                             <th>书名</th>
                             <th>资源名</th>
                             <th>类型</th>
+                            <th>大小</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr th:each="resource : ${resources}">
                                 <td th:text="${resource.resId}"></td>
-                                <td th:text="${resource.bookId}"></td>
+                                <td th:text="${resource.bookName}"></td>
                                 <td th:text="${resource.resName}"></td>
                                 <td th:text="${resource.resType}"></td>
+                                <td th:text="${resource.resSize}"></td>
                                 <td>
                                     <div class="btn-group">
-                                            <a href="javascript:void(0)" class="btn btn-xs btn-default"  th:id="@{'play'+${resource.resId}}" title="播放视频"><i class="glyphicon glyphicon-play"></i></a>
-                                            <div th:id="@{'myModal'+${resource.resId}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                            <a th:if="${resource.resType == 'mp4' || resource.resType == 'mp3'}" href="javascript:void(0)" class="btn btn-xs btn-default"  th:id="@{'play'+${resource.resId}}" title="播放视频"><i class="glyphicon glyphicon-play"></i></a>
+                                            <div th:if="${resource.resType == 'mp4' || resource.resType == 'mp3'}" th:id="@{'myModal'+${resource.resId}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                                                 <div class="modal-dialog" style="width: 750px;">
                                                     <div class="modal-content" >
                                                         <div class="modal-header">
@@ -187,7 +187,7 @@
                                                 </div>
 
                                             </div>
-                                            <script>
+                                            <script th:if="${resource.resType == 'mp4' || resource.resType == 'mp3'}" th:inline="javascript">
                                                 $('#play'+[[${resource.resId}]]).click(function () {
                                                     var src = 'player.html?resId='+[[${resource.resId}]];
                                                     $('#myModal'+[[${resource.resId}]]).modal('show');
@@ -203,8 +203,21 @@
                                                     $("#myModal"+[[${resource.resId}]]+" video").first().attr('src','')
                                                 });
                                             </script>
-<!--                                            <a href="viewer.html?resId=${resource.resId}" class="btn btn-xs btn-default" target="_blank" title="预览文档"><i class="glyphicon glyphicon-eye-open"></i></a>-->
-                                        <a class="btn btn-xs btn-default" th:href="@{'download.html?resId='+${resource.resId}}" title="下载资源" data-toggle="tooltip"><i class="glyphicon glyphicon-download-alt"></i></a>
+                                            <a th:id="@{'viewBtn'+${resource.resId}}" th:if="${resource.resType == 'pdf'}" href="javascript:void(0)" class="btn btn-xs btn-default" target="_blank" title="预览文档"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                            <script th:if="${resource.resType == 'pdf'}" th:inline="javascript">
+                                                $("#viewBtn"+[[${resource.resId}]])
+                                                    .click(
+                                                        function() {
+                                                            var curWwwPath = window.document.location.href;
+                                                            var pathName = window.document.location.pathname;
+                                                            var pos = curWwwPath.indexOf(pathName);
+                                                            var localhostPath = curWwwPath.substring(0, pos);
+                                                            window.open(localhostPath
+                                                                + "/pdf/web/viewer.html?file="
+                                                                + encodeURIComponent("/preview?resId="+[[${resource.resId}]]));
+                                                        });
+                                            </script>
+                                            <a class="btn btn-xs btn-default" th:href="@{'download.html?resId='+${resource.resId}}" title="下载资源" data-toggle="tooltip"><i class="glyphicon glyphicon-download-alt"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -217,27 +230,9 @@
 </div>
 <div class="footer">
     <div class="foot-bot">
-        <div class="t">
-            <p class="mid">
-                        <span>
-                            <a target="_blank" href="//www.cnki.net/gycnki/gycnki.htm">关于我们</a>
-                            <a target="_blank" href="//www.cnki.net/other/gonggao/gongsirongyu.html">CNKI 荣誉</a>
-                            <a target="_blank" href="//www.cnki.net/other/gonggao/bqsm.htm">版权公告</a>
-                            <a target="_blank" href="http://service.cnki.net/">客服中心</a>
-                            <a target="_blank" href="http://help.cnki.net/">在线咨询</a>
-                            <a target="_blank" href="http://help.cnki.net/Live800_1_2.aspx?GroupID=503&amp;PageID=101008&amp;Name=&amp;CookieName=TTKN_OnLine_800">用户建议</a>
-                            <a target="_blank" href="//piccache.cnki.net/index/CNKIRecruit/index.html">知网招聘</a>
-                            <a target="_blank" href="//piccache.cnki.net/index/images2009/other/2019/中国知网推广服务.pdf">知网推广</a>
-                        </span>
-                <span id="copyright">© 1998-2019 中国知网（CNKI）</span>
-            </p>
-            <p class="right">
-            </p>
-        </div>
-        <div class="b">
-            <span>京 ICP 证 040431 号<a target="_blank" href="//piccache.cnki.net/index/images/gb/271.jpg">网络出版服务许可证 (总)网出证(京)字第 271 号</a><a target="_blank" href="//piccache.cnki.net/index/images/gb/170001.jpg">出版物经营许可证</a> 京公网安备 11010802020460 号</span>
-            <span>《中国学术期刊（光盘版）》电子杂志社有限公司</span>
-            <span>KDN 平台基础技术由 KBASE 11.0 提供.</span>
+        <div class="b" style="line-height: 155px;margin: 0 auto;text-align: center;">
+            <span>Copyright © 2020 内蒙古农业大学职业技术学院</span>
+            <span>- 图书馆</span>
         </div>
     </div>
 </div>

@@ -16,7 +16,7 @@
     <div class="top-context">
         <a class="logo"></a>
         <div class="nav-rights">
-            <ul class="login-btns">
+            <ul class="login-btns" th:if="${#strings.isEmpty(session.READER)}">
                 <li class="login">
                     <a class="btn btn-primary" href="login.html">登录</a>
                 </li>
@@ -24,16 +24,14 @@
                     <a class="btn btn-default" href="">注册</a>
                 </li>
             </ul>
-            <!--            <c:if test="${!empty sessionScope.readercard}">-->
-            <!--                <ul class="login-btns">-->
-            <!--                    <li>-->
-            <!--                        <a class="aa" href="reader_detail.html">个人中心</a>-->
-            <!--                    </li>-->
-            <!--                    <li class="reg">-->
-            <!--                        <a class="aa" href="/logout.html">退出</a>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </c:if>-->
+            <ul class="login-btns" th:if="not ${#strings.isEmpty(session.READER)}">
+                <li>
+                    <a class="aa" href="reader_detail.html">个人中心</a>
+                </li>
+                <li class="reg">
+                    <a class="aa" href="/logout.html">退出</a>
+                </li>
+            </ul>
         </div>
         <div class="nav">
             <ul>
@@ -164,27 +162,9 @@
 </div>
 <div class="footer">
     <div class="foot-bot">
-        <div class="t">
-            <p class="mid">
-                        <span>
-                            <a target="_blank" href="//www.cnki.net/gycnki/gycnki.htm">关于我们</a>
-                            <a target="_blank" href="//www.cnki.net/other/gonggao/gongsirongyu.html">CNKI 荣誉</a>
-                            <a target="_blank" href="//www.cnki.net/other/gonggao/bqsm.htm">版权公告</a>
-                            <a target="_blank" href="http://service.cnki.net/">客服中心</a>
-                            <a target="_blank" href="http://help.cnki.net/">在线咨询</a>
-                            <a target="_blank" href="http://help.cnki.net/Live800_1_2.aspx?GroupID=503&amp;PageID=101008&amp;Name=&amp;CookieName=TTKN_OnLine_800">用户建议</a>
-                            <a target="_blank" href="//piccache.cnki.net/index/CNKIRecruit/index.html">知网招聘</a>
-                            <a target="_blank" href="//piccache.cnki.net/index/images2009/other/2019/中国知网推广服务.pdf">知网推广</a>
-                        </span>
-                <span id="copyright">© 1998-2019 中国知网（CNKI）</span>
-            </p>
-            <p class="right">
-            </p>
-        </div>
-        <div class="b">
-            <span>京 ICP 证 040431 号<a target="_blank" href="//piccache.cnki.net/index/images/gb/271.jpg">网络出版服务许可证 (总)网出证(京)字第 271 号</a><a target="_blank" href="//piccache.cnki.net/index/images/gb/170001.jpg">出版物经营许可证</a> 京公网安备 11010802020460 号</span>
-            <span>《中国学术期刊（光盘版）》电子杂志社有限公司</span>
-            <span>KDN 平台基础技术由 KBASE 11.0 提供.</span>
+        <div class="b" style="line-height: 155px;margin: 0 auto;text-align: center;">
+            <span>Copyright © 2020 内蒙古农业大学职业技术学院</span>
+            <span>- 图书馆</span>
         </div>
     </div>
 </div>
