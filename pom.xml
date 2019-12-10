@@ -68,11 +68,6 @@
         </dependency>
 
         <dependency>
-            <groupId>wonder.ajax</groupId>
-            <artifactId>Ajax</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
