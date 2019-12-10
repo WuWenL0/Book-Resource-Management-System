@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>个人中心</title>
+    <title>修改密码</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reader.css">
@@ -83,11 +83,55 @@
         </div>
         <div class="container">
             <div class="no-doc">
-                <img src="images/no_doc.jpg">
-                <p>您还没有消息哦~</p>
+                <link rel="stylesheet" href="css/modernforms.css">
+                <div class="">
+                    <div class="modern-forms">
+                        <div class="modern-container mc2">
+                            <form id="changepwd" method="post" action="reader_pwd_change_do.html">
+                                <fieldset>
+                                    <div class="field-group prepend-icon">
+                                        <input type="password" class="mdn-input" name="oldpasswd" id="oldpasswd" value="" placeholder="请输入旧密码" style="padding-left: 0;">
+                                        <label class="mdn-label">旧密码</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                    <div class="field-group">
+                                        <input type="password" class="mdn-input" name="newpasswd" id="newpasswd" value="" placeholder="请输入新密码">
+                                        <label class="mdn-label">新密码</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                    <div class="field-group">
+                                        <input type="password" class="mdn-input" name="renewpasswd" id="renewpasswd" value="" placeholder="重新输入新密码">
+                                        <label class="mdn-label">重新输入新密码</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                </fieldset>
+                                <div class="mdn-footer">
+                                    <button type="submit" class="mdn-button btn-primary" style="background-color: #1b66e6;">修改</button>
+                                </div>
+                            </form>
+                        </div><!-- modern-container -->
+                    </div><!-- modern-forms -->
+
+
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+<script>
+    function mySubmit(flag){
+        return flag;
+    }
+    $("#changepwd").submit(function () {
+        if($("#oldpasswd").val()==''||$("#newpasswd").val()==''||$("#renewpasswd").val()==''){
+            alert("请填入要修改的密码,不能为空！");
+            return mySubmit(false);
+        }
+        if($("#newpasswd").val() != $("#renewpasswd").val()){
+            alert("请填入两次新密码不同，请重新输入！");
+            return mySubmit(false);
+        }
+    })
+</script>
 </html>

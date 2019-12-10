@@ -129,12 +129,14 @@ public class BookController {
         PageHelper.startPage(pageNum,pageSize);
         String searchWordUp = "%"+searchWord+"%";
         ArrayList<Book> books = bookMapper.queryBook(searchType, searchWordUp);
+        Integer booksSum = bookMapper.queryBookSum(searchType, searchWordUp);
         if (books.isEmpty()){
             model.addAttribute("error", "对不起没有找到相关图书！");
         }
         PageInfo<Book> pageInfo = new PageInfo<Book>(books);
         model.addAttribute("pageInfo",pageInfo);
         model.addAttribute("searchType",searchType);
+        model.addAttribute("booksSum",booksSum);
         model.addAttribute("searchWord",searchWord);
         return "search";
     }

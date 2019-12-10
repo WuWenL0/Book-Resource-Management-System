@@ -18,4 +18,6 @@ public interface DownloadLogMapper {
     @Select("SELECT * FROM db_download_log")
     ArrayList<DownloadLog> selectAllLog();
 
+    @Select("SELECT * FROM db_download_log WHERE reader_id = #{readerId}")
+    ArrayList<DownloadLog> selectByReaderId(Long readerId);
 }

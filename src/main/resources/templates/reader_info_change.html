@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>修改资料</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/reader.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <a class="logo"></a>
+        <div class="nav-rights">
+            <ul class="login-btns">
+                <li class="reg">
+                    <a class="btn btn-default" href="/logout.html">退出</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="header">
+    <div class="user-info">
+        <div class="w1200">
+            <div class="user-headface">
+                <img src="images/user_face.jpg">
+            </div>
+            <div class="user-account">
+                <p class="tip" th:text="@{'欢迎您，'+${session.READER.name}}"></p>
+                <p class="account">
+                    <span th:text="@{'帐户名：'+${session.READER.name}}"></span>
+                    <span th:text="@{'用户：'+${session.READER.readerId}}"></span>
+                </p>
+            </div>
+<!--            <div class="user-modify">-->
+<!--                <a href="reader_info_change.html">修改资料&gt;</a>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
+<div class="main w1200">
+    <div class="left">
+        <ul>
+            <li>
+                <a href="reader_detail.html">
+                    <i class="glyphicon glyphicon-envelope"></i>
+                    个人首页
+                </a>
+            </li>
+            <li>
+                <a href="reader_downloadhistory.html">
+                    <i class="glyphicon glyphicon-time"></i>
+                    下载历史
+                </a>
+            </li>
+            <li>
+                <a href="reader_info_change.html" class="active">
+                    <i class="glyphicon glyphicon-user"></i>
+                    修改资料
+                </a>
+            </li>
+            <li>
+                <a href="reader_pwd_change.html">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    修改密码
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="right">
+        <div class="tap">
+            <span>修改资料</span>
+        </div>
+        <div class="container">
+            <div class="no-doc">
+                <link rel="stylesheet" href="css/modernforms.css">
+                <div class="">
+                    <div class="modern-forms">
+                        <div class="modern-container mc2">
+                            <form method="post" action="reader_info_change_do.html">
+                                <fieldset>
+                                    <div class="field-group prepend-icon">
+                                        <input type="text" class="mdn-input" style="padding-left:0px" name="name" th:value="${readerInfo.name}" placeholder="输入姓名">
+                                        <label class="mdn-label">姓名</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+
+                                </fieldset>
+                                <fieldset>
+                                    <div class="field-group mdn-select">
+                                        <select name="sex">
+                                            <option value="男" th:selected="${readerInfo.sex=='男'}">男</option>
+                                            <option value="女" th:selected="${readerInfo.sex=='女'}">女</option>
+                                        </select>
+                                        <label class="mdn-label">性别</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+
+                                    <div class="field-group prepend-icon">
+                                        <input type="text" class="mdn-input" style="padding-left:0px" name="birth" th:value="${#dates.format(readerInfo.birth,'yyyy-MM-dd')}" placeholder="输入生日 格式：年-月-日">
+                                        <label class="mdn-label">生日</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                    <div class="field-group">
+                                        <input type="text" class="mdn-input" name="address" th:value="${readerInfo.address}" placeholder="输入地址">
+                                        <label class="mdn-label">地址</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                    <div class="field-group">
+                                        <input type="text" class="mdn-input" name="telcode" th:value="${readerInfo.telcode}" placeholder="+81">
+                                        <label class="mdn-label">手机号</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                </fieldset>
+                                <div class="mdn-footer">
+                                    <button type="submit" class="mdn-button btn-primary" style="background-color: #1b66e6;">修改</button>
+                                </div>
+                            </form>
+                        </div><!-- modern-container -->
+                    </div><!-- modern-forms -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -19,9 +19,9 @@
                 <li class="login">
                     <a class="btn btn-primary" href="login.html">登录</a>
                 </li>
-                <li class="reg">
-                    <a class="btn btn-default" href="">注册</a>
-                </li>
+<!--                <li class="reg">-->
+<!--                    <a class="btn btn-default" href="">注册</a>-->
+<!--                </li>-->
             </ul>
             <ul class="login-btns" th:if="not ${#strings.isEmpty(session.READER)}">
                 <li>
@@ -67,6 +67,9 @@
                         <span class="s-gray-999">分类：</span>
                         <span class="font" style="font-weight: initial;">中图法导航
 		            <span catenavbarpart="seperator">-&gt;</span><span id="type">G 文化、科学、教育、体育</span></span></li>
+                    <li>
+                        <span class="s-gray-999">登录号：</span>
+                        <span class="font" th:text="${book.pressmark}"></span></li>
                     <script th:inline="javascript">
                         window.onload=function(){
                             var t= [[${book.classId}]];

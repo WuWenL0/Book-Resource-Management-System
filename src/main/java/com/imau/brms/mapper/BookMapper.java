@@ -30,4 +30,7 @@ public interface BookMapper {
 
     @Select("SELECT * FROM db_book_info WHERE ${searchType} LIKE #{searchWord}")
     ArrayList<Book> queryBook(String searchType , String searchWord);
+
+    @Select("SELECT COUNT(*) FROM db_book_info WHERE ${searchType} LIKE #{searchWord}")
+    Integer queryBookSum(String searchType , String searchWord);
 }

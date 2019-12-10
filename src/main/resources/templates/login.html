@@ -49,10 +49,9 @@
                     <div class="b_clear">
                         <label for="auth_code" class="b_clear">验证码</label>
                         <input type="text" name="" id="auth_code" placeholder="" class="l_float" maxlength="6">
-
-                        <button class="auth_code l_float">获取验证码</button>
+                        <canvas id="canvas" class="auth_code l_float" ></canvas>
                         <img src="images/icons/auth_code.svg">
-                        <p class="tips hidden">验证码错误</p>
+                        <p class="tips hidden" id="auth_code_info">验证码错误</p>
 
                     </div>
                     <div class="b_clear submit">
@@ -102,34 +101,10 @@
             }
         }
     )
-    // 记住登录信息
-    function rememberLogin(username, password, checked) {
-        Cookies.set('loginStatus', {
-            username: username,
-            password: password,
-            remember: checked
-        }, {expires: 30, path: ''})
-    }
-    // 若选择记住登录信息，则进入页面时设置登录信息
-    function setLoginStatus() {
-        var loginStatusText = Cookies.get('loginStatus')
-        if (loginStatusText) {
-            var loginStatus
-            try {
-                loginStatus = JSON.parse(loginStatusText);
-                $('#id').val(loginStatus.username);
-                $('#passwd').val(loginStatus.password);
-                $("#remember").prop('checked',true);
-            } catch (__) {}
-        }
-    }
-
-    // 设置登录信息
-    setLoginStatus();
     $("#loginButton").click(function () {
         var id =$("#id").val();
         var passwd=$("#passwd").val();
-        var remember=$("#remember").prop('checked');
+        var auth_code=$("#auth_code").val();
 
         if( id=='' && passwd==''){
             $("#info").text("提示:账号和密码不能为空");
@@ -140,8 +115,14 @@
         else if( passwd ==''){
             $("#info").text("提示:密码不能为空");
         }
+        else if( auth_code ==''){
+            $("#info").text("提示:验证码不能为空");
+        }
         else if(isNaN( id )){
             $("#info").text("提示:账号必须为数字");
+        }
+        else if($("#auth_code_info").text() !='验证码正确'){
+            $("#info").text("提示:验证码错误");
         }
         else {
             $.ajax({

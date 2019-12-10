@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>个人中心</title>
+    <title>下载记录</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reader.css">
@@ -52,13 +52,13 @@
     <div class="left">
         <ul>
             <li>
-                <a href="reader_detail.html" class="active">
+                <a href="reader_detail.html">
                     <i class="glyphicon glyphicon-envelope"></i>
                     个人首页
                 </a>
             </li>
             <li>
-                <a href="reader_downloadhistory.html">
+                <a href="reader_downloadhistory.html" class="active">
                     <i class="glyphicon glyphicon-time"></i>
                     下载历史
                 </a>
@@ -83,9 +83,40 @@
         </div>
         <div class="container">
             <div class="no-doc">
-                <img src="images/no_doc.jpg">
-                <p>您还没有消息哦~</p>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>用户</th>
+                                <th>IP</th>
+                                <th>书名</th>
+                                <th>资源名</th>
+                                <th>下载时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="downloadLog:${pageInfo.list}">
+                                    <td th:text="${downloadLog.readerId}"></td>
+                                    <td th:text="${downloadLog.ip}"></td>
+                                    <td th:text="${downloadLog.bookName}"></td>
+                                    <td th:text="${downloadLog.resName}"></td>
+                                    <td th:text="${#dates.format(downloadLog.downloadTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+            <nav aria-label="Page navigation" style="text-align: center;" th:if="${pageInfo.pages>=2}">
+                <ul class="pagination">
+                    <li><a th:href="@{'reader_downloadhistory.html'}">«</a></li>
+                    <li th:each="nav: ${pageInfo.navigatepageNums}" th:class="${nav == pageInfo.pageNum}?'active'">
+                        <a th:href="@{'reader_downloadhistory.html?pageNum='+${nav}}" th:text="${nav}"></a>
+                    </li>
+                    <li><a th:href="@{'reader_downloadhistory.html?pageNum='+${pageInfo.pages}}">»</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

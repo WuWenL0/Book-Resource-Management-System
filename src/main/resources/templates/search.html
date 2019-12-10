@@ -20,9 +20,9 @@
                 <li class="login">
                     <a class="btn btn-primary" href="login.html">登录</a>
                 </li>
-                <li class="reg">
-                    <a class="btn btn-default" href="">注册</a>
-                </li>
+<!--                <li class="reg">-->
+<!--                    <a class="btn btn-default" href="">注册</a>-->
+<!--                </li>-->
             </ul>
             <ul class="login-btns" th:if="not ${#strings.isEmpty(session.READER)}">
                 <li>
@@ -51,6 +51,7 @@
                     <li>书名</li>
                     <li>作者</li>
                     <li>出版社</li>
+                    <li>分类号</li>
                     <li>isbn</li>
                 </ul>
             </div>
@@ -61,7 +62,38 @@
             <input type="submit" value="" class="btn-search">
         </form>
     </div>
-    <script>
+    <script th:inline="javascript">
+        window.onload = function() {
+            var searchType = ""+[[${param.searchType}]];
+            var searchWord = ""+[[${param.searchWord}]];
+            switch (searchType) {
+                case "name":
+                    $('.select_txt').html($('.option li:eq(0)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('name');
+                    break;
+                case "author":
+                    $('.select_txt').html($('.option li:eq(1)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('author');
+                    break;
+                case "publish":
+                    $('.select_txt').html($('.option li:eq(2)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('publish');
+                    break;
+                case "class_id":
+                    $('.select_txt').html($('.option li:eq(3)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('class_id');
+                    break;
+                case "isbn":
+                    $('.select_txt').html($('.option li:eq(4)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('isbn');
+                    break;
+            }
+        }
         $(function(){
             $(".select_box").click(function(event){
                 event.stopPropagation();
@@ -78,6 +110,7 @@
                 var smValue = $('.option li:eq(0)').html();
                 var zzValue = $('.option li:eq(1)').html();
                 var cbValue = $('.option li:eq(2)').html();
+                var flValue = $('.option li:eq(3)').html();
                 $(this).parent().siblings(".select_txt").text(check_value);
                 $("#select_value").val(check_value);
                 if(check_value == smValue) {
@@ -89,6 +122,9 @@
                 }else if(check_value == cbValue) {
                     $('#searchPlaceholder').prop('placeholder','请输入出版社名称');
                     $('#select_value').prop('value','publish');
+                }else if(check_value == flValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入分类号');
+                    $('#select_value').prop('value','class_id');
                 }else {
                     $('#searchPlaceholder').prop('placeholder','请输入ISBN');
                     $('#select_value').prop('value','isbn');
@@ -101,13 +137,13 @@
 <div class="search_main">
     <div class="s-sort">
         <span id="modifytime" class="sort sort3">出版时间<i class="sort-img down-s"></i></span>
-        <span id="createtime" class="sort sort3 desc">制作时间<i class="sort-img down"></i></span>
-        <span id="title" class="sort sort3">题&nbsp;&nbsp;&nbsp;&nbsp;名<i class="sort-img down"></i></span>
+<!--        <span id="createtime" class="sort sort3 desc">制作时间<i class="sort-img down"></i></span>-->
+<!--        <span id="title" class="sort sort3">题&nbsp;&nbsp;&nbsp;&nbsp;名<i class="sort-img down"></i></span>-->
         <!--top翻页-->
-        <ul id="top_pages" class="top_pages f_right"><li class="prev"><a class="img_sprite disabled"></a></li><li class="pages"><span class="this_page">1</span>/<span class="all_page">1000</span></li><li class="next"><a class="img_sprite"></a></li></ul>
+        <ul id="top_pages" class="top_pages f_right"><li class="prev"><a class="img_sprite disabled"></a></li><li class="pages"><span class="this_page" th:text="${pageInfo.pageNum}"></span>/<span class="all_page" th:text="${pageInfo.pages}"></span></li><li class="next"><a class="img_sprite"></a></li></ul>
         <!--top翻页-->
-        <span class="sort4">共 <span class="u-num-red result" cx_dolistpart="container" id="sortlist" cx_cdname="sortlist.recordcount" cx_cdconf="src=server&amp;rep=none">
-		      14323</span> 条数据</span>
+        <span class="sort4">共 <span class="u-num-red result" id="sortlist" th:text="${booksSum}">
+		      </span> 条数据</span>
     </div>
     <div class="s-list">
         <div class="alert alert-danger alert-dismissible" role="alert" th:if="${not #strings.isEmpty(error)}" th:text="${error}">
@@ -130,6 +166,9 @@
                 <p>
                     <span>分类：</span>
                     <font th:text="${book.classId}"></font></p>
+                <p>
+                    <span>登录号：</span>
+                    <font th:text="${book.pressmark}"></font></p>
                 <p style="float: left;margin-right: 20px;">
                     <span>出版社：</span>
                     <font th:text="${book.publish}"></font></p>
@@ -139,12 +178,12 @@
                 <p class="s-summary">
                     <span>简介：</span>
                     <font th:if="${book.introduction.length()<100}" th:text="${book.introduction}"></font>
-                    <font th:if="${book.introduction.length()>100}" th:text="${#strings.substring(book.introduction,0,100)}"></font>
+                    <font th:if="${book.introduction.length()>100}" th:text="@{${#strings.substring(book.introduction,0,100)}+'...'}"></font>
                     <a th:href="@{'book_detail.html?bookId='+${book.bookId}}" target="_blank">查看详情&gt;&gt;</a></p>
             </div>
         </div>
     </div>
-    <div class="m-page" th:if="${pageInfo.list.size()!=0}">
+    <div class="m-page" th:if="${pageInfo.pages>=2}">
         <ul id="paging">
             <li class="prev">
                 <a th:href="@{'search.html?searchType='+${searchType}+'&searchWord='+${searchWord}}">首页</a></li>

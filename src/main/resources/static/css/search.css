@@ -66,7 +66,7 @@
 /* 列表页 */
 
 .s-page {
-    height: 185px;
+    /*height: 185px;*/
     border-bottom: 1px dashed #ddd;
     padding: 15px 0;
 }

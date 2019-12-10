@@ -18,9 +18,9 @@
                 <li class="login">
                     <a class="btn btn-primary" href="login.html">登录</a>
                 </li>
-                <li class="reg">
-                    <a class="btn btn-default" href="">注册</a>
-                </li>
+<!--                <li class="reg">-->
+<!--                    <a class="btn btn-default" href="">注册</a>-->
+<!--                </li>-->
             </ul>
             <ul class="login-btns" th:if="not ${#strings.isEmpty(session.READER)}">
                 <li>
@@ -48,7 +48,8 @@
                     <li>书名</li>
                     <li>作者</li>
                     <li>出版社</li>
-                    <li>isbn</li>
+                    <li>分类号</li>
+                    <li>ISBN</li>
                 </ul>
             </div>
         </div>
@@ -75,6 +76,7 @@
                 var smValue = $('.option li:eq(0)').html();
                 var zzValue = $('.option li:eq(1)').html();
                 var cbValue = $('.option li:eq(2)').html();
+                var flValue = $('.option li:eq(3)').html();
                 $(this).parent().siblings(".select_txt").text(check_value);
                 $("#select_value").val(check_value);
                 if(check_value == smValue) {
@@ -86,6 +88,9 @@
                 }else if(check_value == cbValue) {
                     $('#searchPlaceholder').prop('placeholder','请输入出版社名称');
                     $('#select_value').prop('value','publish');
+                }else if(check_value == flValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入分类号');
+                    $('#select_value').prop('value','class_id');
                 }else {
                     $('#searchPlaceholder').prop('placeholder','请输入ISBN');
                     $('#select_value').prop('value','isbn');
