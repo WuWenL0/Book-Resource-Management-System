@@ -1,9 +1,6 @@
 package com.imau.brms.controller;
 
-import com.imau.brms.entity.Book;
-import com.imau.brms.entity.DownloadLog;
-import com.imau.brms.entity.Notice;
-import com.imau.brms.entity.Resource;
+import com.imau.brms.entity.*;
 import com.imau.brms.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +27,15 @@ public class IndexController {
     @Autowired
     private BookMapper bookMapper;
 
+    @Autowired
+    private WebConfigMapper webConfigMapper;
+
     @GetMapping({"/","/index","/index.html"})
     public String toIndex(Model model){
+        WebConfig horse = webConfigMapper.findWebConfigByWebName("horse");
+        WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
+        model.addAttribute("horse",horse);
+        model.addAttribute("brms",brms);
         ArrayList<Notice> allNotice = noticeMapper.getAllNotice();
         ArrayList<Resource> downSumSort = resourceMapper.getResourceDownSumSort();
         ArrayList<Book> recommendBooks = bookMapper.getRecommendBooks();

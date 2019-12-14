@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>搜索</title>
+    <title th:text="@{'搜索 - '+${brms.title}}">搜索</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
@@ -14,7 +14,7 @@
 <body>
 <div class="top">
     <div class="top-context">
-        <a class="logo"></a>
+        <a class="logo" ><img src="/logoImg" alt="" style="width: 250px;height: 70px;"></a>
         <div class="nav-rights">
             <ul class="login-btns" th:if="${#strings.isEmpty(session.READER)}">
                 <li class="login">
@@ -202,8 +202,8 @@
 <div class="footer">
     <div class="foot-bot">
         <div class="b" style="line-height: 155px;margin: 0 auto;text-align: center;">
-            <span>Copyright © 2020 内蒙古农业大学职业技术学院</span>
-            <span>- 图书馆</span>
+            <span th:text="${brms.copyright}">Copyright © 2020 内蒙古农业大学职业技术学院 - 图书馆</span>
+            <span th:text="${brms.icp}"></span>
         </div>
     </div>
 </div>

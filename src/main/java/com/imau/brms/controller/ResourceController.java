@@ -103,7 +103,6 @@ public class ResourceController {
                     if(!file1.getParentFile().exists()) {
                         file1.getParentFile().mkdirs();
                     }
-                    System.out.println(file1.getParentFile());
                     byte[] bytes = file.getBytes();
                     out = new BufferedOutputStream(new FileOutputStream(file1));
                     out.write(bytes);

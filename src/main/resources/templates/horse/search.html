@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="@{'搜索 - '+${horse.title}}">搜索</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <style>
+        .t1{
+            color: #054ec3;
+        }
+        .t1:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <img width="250" height="70" src="/horse/logoImg" alt="logo" />
+        <div class="nav">
+            <ul>
+                <li><a href="/horse">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search">
+    <div class="searchbox">
+        <div class="mod_select">
+            <div class="select_box">
+                <span class="select_txt">书名</span>
+                <span class="select-icon"></span>
+                <ul class="option">
+                    <li>名称</li>
+                    <li>作者</li>
+                    <li>等级</li>
+                </ul>
+            </div>
+        </div>
+        <form action="search.html" method="get" accept-charset="UTF-8">
+            <input type="hidden" name="searchType" value="name" id="select_value">
+            <input type="text" name="searchWord" id="searchPlaceholder" class="import" placeholder="请输入书名">
+            <input type="submit" value="" class="btn-search">
+        </form>
+    </div>
+    <script th:inline="javascript">
+        window.onload = function() {
+            var searchType = ""+[[${param.searchType}]];
+            var searchWord = ""+[[${param.searchWord}]];
+            switch (searchType) {
+                case "name":
+                    $('.select_txt').html($('.option li:eq(0)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('name');
+                    break;
+                case "author":
+                    $('.select_txt').html($('.option li:eq(1)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('author');
+                    break;
+                case "grade":
+                    $('.select_txt').html($('.option li:eq(2)').html());
+                    $('#searchPlaceholder').val(searchWord);
+                    $('#select_value').val('grade');
+                    break;
+            }
+        }
+        $(function(){
+            $(".select_box").click(function(event){
+                event.stopPropagation();
+                $(this).find(".option").toggle();
+                $(this).parent().siblings().find(".option").hide();
+            });
+            $(document).click(function(event){
+                var eo=$(event.target);
+                if($(".select_box").is(":visible") && eo.attr("class")!="option" && !eo.parent(".option").length)
+                    $('.option').hide();
+            });
+            $(".option li").click(function(){
+                var check_value=$(this).text();
+                var smValue = $('.option li:eq(0)').html();
+                var zzValue = $('.option li:eq(1)').html();
+                $(this).parent().siblings(".select_txt").text(check_value);
+                $("#select_value").val(check_value);
+                if(check_value == smValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入名称');
+                    $('#select_value').prop('value','name');
+                }else if(check_value == zzValue) {
+                    $('#searchPlaceholder').prop('placeholder','请输入作者名');
+                    $('#select_value').prop('value','author');
+                }else {
+                    $('#searchPlaceholder').prop('placeholder','请输入等级');
+                    $('#select_value').prop('value','grade');
+                }
+            });
+        })
+    </script>
+</div>
+<div class="banner"></div>
+<div class="search_main">
+    <div class="s-sort">
+        <span id="modifytime" class="sort sort3">出版时间<i class="sort-img down-s"></i></span>
+<!--        <span id="createtime" class="sort sort3 desc">制作时间<i class="sort-img down"></i></span>-->
+<!--        <span id="title" class="sort sort3">题&nbsp;&nbsp;&nbsp;&nbsp;名<i class="sort-img down"></i></span>-->
+        <!--top翻页-->
+        <ul id="top_pages" class="top_pages f_right"><li class="prev"><a class="img_sprite disabled"></a></li><li class="pages"><span class="this_page" th:text="${pageInfo.pageNum}"></span>/<span class="all_page" th:text="${pageInfo.pages}"></span></li><li class="next"><a class="img_sprite"></a></li></ul>
+        <!--top翻页-->
+        <span class="sort4">共 <span class="u-num-red result" id="sortlist" th:text="${horsesSum}">
+		      </span> 条数据</span>
+    </div>
+    <div class="s-list">
+        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${not #strings.isEmpty(error)}" th:text="${error}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="s-page" th:if="${pageInfo.list.size()!=0}" th:each="horse : ${pageInfo.list}">
+            <div class="s-detailed" style="display: block;">
+                <p>
+                    <a class="t1" th:href="@{'horse_detail.html?id='+${horse.id}}" th:text="@{${horseStat.index+1}+'. '+${horse.name}}" target="_blank">
+                    </a>
+                </p>
+                <p>
+                    <span>作者：</span>
+                    <font th:text="${horse.author}"></font>
+                </p>
+                <p>
+                    <span>级别：</span>
+                    <font th:text="${horse.grade}"></font>
+                </p>
+                <p style="margin-right: 20px;">
+                    <span>日期：</span>
+                    <font th:text="${#dates.format(horse.time, 'yyyy-MM-dd')}"></font>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="m-page" th:if="${pageInfo.pages>=2}">
+        <ul id="paging">
+            <li class="prev">
+                <a th:href="@{'/horsr/search.html?searchType='+${searchType}+'&searchWord='+${searchWord}}">首页</a></li>
+            <li class="prev" th:if="${pageInfo.hasPreviousPage}">
+                <a th:href="@{'/horsr/search.html?searchType='+${searchType}+'&searchWord='+${searchWord}+'&pageNum='+${pageInfo.prePage}}">上一页</a></li>
+            <li class="item" th:each="nav : ${pageInfo.navigatepageNums}" th:class="${nav == pageInfo.pageNum}?'active'">
+                <a th:href="@{'/horsr/search.html?searchType='+${searchType}+'&searchWord='+${searchWord}+'&pageNum='+${nav}}" th:text="${nav}"></a>
+            </li>
+            <li class="next" th:if="${pageInfo.hasNextPage}">
+                <a th:href="@{'/horsr/search.html?searchType='+${searchType}+'&searchWord='+${searchWord}+'&pageNum='+${pageInfo.nextPage}}">下一页</a></li>
+            <li class="next">
+                <a th:href="@{'/horsr/search.html?searchType='+${searchType}+'&searchWord='+${searchWord}+'&pageNum='+${pageInfo.pages}}">尾页</a></li>
+        </ul>
+    </div>
+</div>
+<div class="footer">
+    <div class="foot-bot">
+        <div class="b" style="line-height: 155px;margin: 0 auto;text-align: center;">
+            <span th:text="${horse.copyright}">Copyright © 2020 内蒙古农业大学职业技术学院 - 图书馆</span>
+            <span th:text="${horse.icp}"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.imau.brms.dto.ResourceDTO;
 import com.imau.brms.entity.Book;
 import com.imau.brms.entity.Resource;
+import com.imau.brms.entity.WebConfig;
 import com.imau.brms.mapper.BookMapper;
 import com.imau.brms.mapper.ResourceMapper;
+import com.imau.brms.mapper.WebConfigMapper;
 import com.imau.brms.service.ResourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class BookController {
 
     @Autowired
     private ResourseService resourseService;
+
+    @Autowired
+    private WebConfigMapper webConfigMapper;
     /*
         管理员添加图书
      */
@@ -114,6 +119,8 @@ public class BookController {
      */
     @RequestMapping("/book_detail.html")
     public String readerBookDetail(Integer bookId , Model model){
+        WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
+        model.addAttribute("brms",brms);
         Book book = bookMapper.findBookById(bookId);
         ArrayList<ResourceDTO> resourceDTOS = resourseService.list(bookId);
         model.addAttribute("book",book);
@@ -124,8 +131,11 @@ public class BookController {
     /*
         读者搜索功能
      */
+
     @RequestMapping("/search.html")
     public String readerQuerybook(String searchType , String searchWord , Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,@RequestParam(value="pageSize",defaultValue="20")int pageSize){
+        WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
+        model.addAttribute("brms",brms);
         PageHelper.startPage(pageNum,pageSize);
         String searchWordUp = "%"+searchWord+"%";
         ArrayList<Book> books = bookMapper.queryBook(searchType, searchWordUp);

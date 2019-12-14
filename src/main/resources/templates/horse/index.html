@@ -1,0 +1,85 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${horse.title}">运动马项目浏览系统</title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/search.css">
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <div class="skinBg" style="background-image: url('images/bg2.jpg');"></div>
+    <header id="header">
+        <nav class="headNavs fr tr">
+            <a href="/horse"><span>首页</span></a>
+            <a><span class="s-icon s-icon-line"></span></a>
+            <a href="/"><span th:text="${brms.title}">随书光盘管理系统</span></a>
+        </nav>
+    </header>
+    <div class="content tc" style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+        <p class="logo" style="margin-bottom: 50px;">
+            <img width="500" height="160" src="/horse/logoImg" alt="logo" />
+        </p>
+<!--        <div class="searchBox">-->
+<!--            <form action="">-->
+<!--                <input type="text" class="searchIpt f14" name="wd" maxlength="100" autocomplete="off"/>-->
+<!--                <input type="submit" class="btn cp" value="搜索" />-->
+<!--            </form>-->
+<!--        </div>-->
+            <div class="searchbox">
+                <div class="mod_select">
+                    <div class="select_box">
+                        <span class="select_txt">名称</span>
+                        <span class="select-icon"></span>
+                        <ul class="option">
+                            <li>名称</li>
+                            <li>作者</li>
+                            <li>等级</li>
+                        </ul>
+                    </div>
+                </div>
+                <form action="search.html" method="get" accept-charset="UTF-8">
+                    <input type="hidden" name="searchType" value="name" id="select_value">
+                    <input type="text" name="searchWord" id="searchPlaceholder" class="import" placeholder="请输入书名">
+                    <input type="submit" value="" class="btn-search">
+                </form>
+            </div>
+            <script>
+                $(function(){
+                    $(".select_box").click(function(event){
+                        event.stopPropagation();
+                        $(this).find(".option").toggle();
+                        $(this).parent().siblings().find(".option").hide();
+                    });
+                    $(document).click(function(event){
+                        var eo=$(event.target);
+                        if($(".select_box").is(":visible") && eo.attr("class")!="option" && !eo.parent(".option").length)
+                            $('.option').hide();
+                    });
+                    $(".option li").click(function(){
+                        var check_value=$(this).text();
+                        var smValue = $('.option li:eq(0)').html();
+                        var zzValue = $('.option li:eq(1)').html();
+                        $(this).parent().siblings(".select_txt").text(check_value);
+                        $("#select_value").val(check_value);
+                        if(check_value == smValue) {
+                            $('#searchPlaceholder').prop('placeholder','请输入项目名');
+                            $('#select_value').prop('value','name');
+                        }else if(check_value == zzValue) {
+                            $('#searchPlaceholder').prop('placeholder','请输入作者名');
+                            $('#select_value').prop('value','author');
+                        }else {
+                            $('#searchPlaceholder').prop('placeholder','请输入等级');
+                            $('#select_value').prop('value','grade');
+                        }
+                    });
+                })
+            </script>
+    </div>
+    <footer id="footer"style="position: absolute;top:80%;left:50%;transform:translate(-50%,-50%);" class="tc" th:text="${horse.copyright}">©Copyright © 2020 内蒙古农业大学职业技术学院 - 图书馆 <span th:text="${horse.icp}"></span></footer>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.autocomplete.min.js"></script>
+</body>
+</html>

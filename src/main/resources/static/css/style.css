@@ -21,7 +21,7 @@
     width: 250px;
     height: 70px;
 	/*margin-top: 13px;*/
-	background: url("../images/logo.png") no-repeat top center;
+	/*background: url("../images/logo.png") no-repeat top center;*/
     background-size: 100% 100%;
 }
 .login-btns{

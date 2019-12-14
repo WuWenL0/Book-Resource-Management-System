@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>新增运动马项目</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <!--日期选择插件-->
+    <link rel="stylesheet" href="js/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+    <link href="css/style.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="container-fluid p-t-15">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form action="admin_horse_add_do.html" method="post" class="row" enctype="multipart/form-data">
+                        <div class="form-group col-md-12">
+                            <label for="name">项目名称</label>
+                            <input type="text" class="form-control" id="name" name="name" value="" placeholder="请输入通知主题" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="author">项目上传人</label>
+                            <input type="text" class="form-control" id="author" name="author" value="" placeholder="请输入项目上传人" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">项目等级</label>
+                            <input type="text" class="form-control" id="grade" name="grade" value="" placeholder="请输入通知等级" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="time">项目时间</label>
+                            <input class="form-control js-datepicker m-b-10" type="text" id="time" name="time" placeholder="请输入项目时间" value="" data-date-format="yyyy-mm-dd" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>项目简介</label>
+                            <div id="editor">
+                            </div>
+                            <textarea id="context" name="content" style="display: none;"></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label th:text="${horse.file1Name}">文件1</label>
+                            <div class="input-group">
+                                <input id='file1' class="form-control" onclick="$('#i-file-1').click();" placeholder="点击上传文件,若无文件可不添加">
+                                <label class="input-group-btn">
+                                    <input type="button" id="i-check-1" value="浏览文件" class="btn btn-primary" onclick="$('#i-file-1').click();">
+                                </label>
+                            </div>
+                            <input type="file" name="file1" id='i-file-1' accept=".pdf" onchange="$('#file1').val($('#i-file-1').val());" style="display: none">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label th:text="${horse.file2Name}">文件2</label>
+                            <div class="input-group">
+                                <input id='file2' class="form-control" onclick="$('#i-file-2').click();" placeholder="点击上传文件,若无文件可不添加">
+                                <label class="input-group-btn">
+                                    <input type="button" id="i-check-2" value="浏览文件" class="btn btn-primary" onclick="$('#i-file-2').click();">
+                                </label>
+                            </div>
+                            <input type="file" name="file2" id='i-file-2' accept=".pdf" onchange="$('#file2').val($('#i-file-2').val());" style="display: none">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label th:text="${horse.file3Name}">文件3</label>
+                            <div class="input-group">
+                                <input id='file3' class="form-control" onclick="$('#i-file-3').click();" placeholder="点击上传文件,若无文件可不添加">
+                                <label class="input-group-btn">
+                                    <input type="button" id="i-check-3" value="浏览文件" class="btn btn-primary" onclick="$('#i-file-3').click();">
+                                </label>
+                            </div>
+                            <input type="file" name="file3" id='i-file-3' accept=".pdf" onchange="$('#file3').val($('#i-file-3').val());" style="display: none">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">确 定</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="../admin/js/jquery.min.js"></script>
+<!--日期选择插件-->
+<script src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+<script>
+    function mySubmit(flag){
+        return flag;
+    }
+    $("#addbook").submit(function () {
+        if($("#name").val()==''||$("#author").val()==''||$("#publish").val()==''||$("#isbn").val()==''||$("#introduction").val()==''||$("#language").val()==''||$("#price").val()==''||$("#pubdate").val()==''||$("#classId").val()==''||$("#pressmark").val()==''||$("#state").val()==''){
+            alert("请填入完整信息！");
+            return mySubmit(false);
+        }
+    })
+</script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $('#context').val(html)
+    }
+    editor.create()
+    $('#context').val(editor.txt.html())
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="@{${horse.name}+' - '+${horseCon.title}}"></title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bdetail.css">
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-context">
+        <img width="250" height="70" src="/horse/logoImg" alt="logo" />
+        <div class="nav">
+            <ul>
+                <li><a href="/horse">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="d-main">
+    <div cx_dolistpart="container" id="infodetails">
+        <div class="g-bookInfo" style="min-height: 0px;">
+            <div class="m-field" id="field" style="width: 1150px;margin-left: 20px;">
+                <div class="m-title" style="width: 100%;">
+                    <p class="u-title" th:text="${horse.name}"></p></div>
+                <ul class="m-showField m-maxField">
+                    <li>
+                        <span class="s-gray-999">作者：</span>
+                        <span class="font" th:text="${horse.author}"></span>
+                    </li>
+                    <li>
+                        <span class="s-gray-999">等级：</span>
+                        <span class="font" th:text="${horse.grade}"></span>
+                    </li>
+                    <li>
+                        <span class="s-gray-999">时间：</span>
+                        <span class="font" th:text="${#dates.format(horse.time, 'yyyy-MM-dd')}"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-brief">
+                <div class="u-briefName">简介：</div>
+                <div class="u-briefContent font" th:utext="${horse.content}"></div>
+            </div>
+        </div>
+        <div class="g-disk">
+            <ul class="title"><li class="selected">资料查看</li></ul>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th th:text="${horseCon.file1Name}">文件一</th>
+                            <th th:text="${horseCon.file2Name}">文件二</th>
+                            <th th:text="${horseCon.file3Name}">文件三</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a style="margin: 0 auto;" id="file1" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file1Name}}">浏览文件一</a>
+                                    <script th:inline="javascript">
+                                        $("#file1")
+                                            .click(
+                                                function() {
+                                                    var curWwwPath = window.document.location.href;
+                                                    var pathName = window.document.location.pathname;
+                                                    var pos = curWwwPath.indexOf(pathName);
+                                                    var localhostPath = curWwwPath.substring(0, pos);
+                                                    window.open(localhostPath
+                                                        + "/pdf/web/viewer.html?file="
+                                                        + encodeURIComponent("/horse/preview?path="+[[${horse.file1Src}]]));
+                                                });
+                                    </script>
+                                </td>
+                                <td>
+                                    <a style="margin: 0 auto;" id="file2" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file2Name}}">浏览文件二</a>
+                                    <script th:inline="javascript">
+                                        $("#file2")
+                                            .click(
+                                                function() {
+                                                    var curWwwPath = window.document.location.href;
+                                                    var pathName = window.document.location.pathname;
+                                                    var pos = curWwwPath.indexOf(pathName);
+                                                    var localhostPath = curWwwPath.substring(0, pos);
+                                                    window.open(localhostPath
+                                                        + "/pdf/web/viewer.html?file="
+                                                        + encodeURIComponent("/horse/preview?path="+[[${horse.file2Src}]]));
+                                                });
+                                    </script>
+                                </td>
+                                <td>
+                                    <a style="margin: 0 auto;" id="file3" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file3Name}}">浏览文件三</a>
+                                    <script th:inline="javascript">
+                                        $("#file3")
+                                            .click(
+                                                function() {
+                                                    var curWwwPath = window.document.location.href;
+                                                    var pathName = window.document.location.pathname;
+                                                    var pos = curWwwPath.indexOf(pathName);
+                                                    var localhostPath = curWwwPath.substring(0, pos);
+                                                    window.open(localhostPath
+                                                        + "/pdf/web/viewer.html?file="
+                                                        + encodeURIComponent("/horse/preview?path="+[[${horse.file3Src}]]));
+                                                });
+                                    </script>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="foot-bot">
+        <div class="b" style="line-height: 155px;margin: 0 auto;text-align: center;">
+            <span th:text="${horseCon.copyright}">Copyright © 2020 内蒙古农业大学职业技术学院 - 图书馆</span>
+            <span th:text="${horseCon.icp}"></span>
+        </div>
+    </div>
+</div>
+
+</body>

@@ -33,6 +33,15 @@
                         <li class="nav-item active"> <a class="multitabs" href="admin_main.html"><i class="mdi mdi-home"></i> <span>后台首页</span></a> </li>
                         <shiro:hasPermission name="super">
                             <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="mdi mdi-book-open-page-variant"></i> <span>网站信息管理</span></a>
+                                <ul class="nav nav-subnav">
+                                    <li> <a class="multitabs" href="admin_brmsInfo.html">随书资源网站信息</a> </li>
+                                    <li> <a class="multitabs" href="admin_horseInfo.html">运动马网站信息</a> </li>
+                                </ul>
+                            </li>
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="super">
+                            <li class="nav-item nav-item-has-subnav">
                                 <a href="javascript:void(0)"><i class="mdi mdi-book-open-page-variant"></i> <span>管理员管理</span></a>
                                 <ul class="nav nav-subnav">
                                     <li> <a class="multitabs" href="admin_alladmins.html">全部管理</a> </li>
@@ -66,6 +75,13 @@
                             <ul class="nav nav-subnav">
                                 <li> <a class="multitabs" href="admin_allnotices.html">全部通知</a> </li>
                                 <li> <a class="multitabs" href="admin_notice_add.html">增加通知</a> </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-chart-donut-variant"></i> <span>运动马管理</span></a>
+                            <ul class="nav nav-subnav">
+                                <li> <a class="multitabs" href="admin_allhorse.html">全部项目</a> </li>
+                                <li> <a class="multitabs" href="admin_horse_add.html">增加项目</a> </li>
                             </ul>
                         </li>
                     </ul>

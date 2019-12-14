@@ -3,7 +3,9 @@ package com.imau.brms.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imau.brms.entity.Notice;
+import com.imau.brms.entity.WebConfig;
 import com.imau.brms.mapper.NoticeMapper;
+import com.imau.brms.mapper.WebConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,8 +115,12 @@ public class NoticeController {
     /*
         读者查看详情
      */
+    @Autowired
+    private WebConfigMapper webConfigMapper;
     @GetMapping("/notice_detail.html")
     public String readerNoticeDetail(Integer id , Model model){
+        WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
+        model.addAttribute("brms",brms);
         Notice noticeById = noticeMapper.findNoticeById(id);
         model.addAttribute("notice", noticeById);
         return "/notice_detail";

@@ -3,7 +3,9 @@ import	java.net.Authenticator;
 
 import com.imau.brms.entity.Admin;
 import com.imau.brms.entity.ReaderCard;
+import com.imau.brms.entity.WebConfig;
 import com.imau.brms.mapper.ReaderMapper;
+import com.imau.brms.mapper.WebConfigMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -12,6 +14,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,11 +31,16 @@ public class LoginController {
     @Autowired
     private ReaderMapper readerMapper;
 
+    @Autowired
+    private WebConfigMapper webConfigMapper;
+
     /*
         前台登录功能
      */
     @RequestMapping("/login.html")
-    public String toLogin(){
+    public String toLogin(Model model){
+        WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
+        model.addAttribute("brms",brms);
         return "login";
     }
 
