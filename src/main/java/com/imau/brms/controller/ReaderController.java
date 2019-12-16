@@ -77,10 +77,14 @@ public class ReaderController {
     @RequestMapping("/reader_info_change_do.html")
     public void toReaderChangeInfoDo(HttpServletRequest request , HttpServletResponse response , ReaderInfo readerInfo) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        Long readerId = ((ReaderCard) request.getSession().getAttribute("READER")).getReaderId();
+        ReaderCard reader = (ReaderCard) request.getSession().getAttribute("READER");
+        Long readerId = reader.getReaderId();
         readerInfo.setReaderId(readerId);
         try {
             readerMapper.updateReaderInfo(readerInfo);
+            reader.setName(readerInfo.getName());
+            readerMapper.updateReaderCardName(reader);
+            request.getSession().setAttribute("READER",reader);
             response.getWriter().print("<script language=javascript>alert('资料更新成功');window.location='/reader_detail.html'</script>");
         } catch (Exception e) {
             response.getWriter().print("<script language=javascript>alert('资料更新失败！');window.location='/reader_detail.html'</script>");

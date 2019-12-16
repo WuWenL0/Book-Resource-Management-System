@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="admin_reader_add_do.html" method="post" class="row">
+                    <form action="admin_reader_add_do.html" id="addreader" method="post" class="row">
                         <div class="form-group col-md-12">
                             <label for="readerId">读者号</label>
                             <input type="text" class="form-control" id="readerId" name="readerId" value="" placeholder="请输入读者号" />
@@ -45,9 +45,9 @@
     function mySubmit(flag){
         return flag;
     }
-    $("#addbook").submit(function () {
-        if($("#name").val()==''||$("#author").val()==''||$("#publish").val()==''||$("#isbn").val()==''||$("#introduction").val()==''||$("#language").val()==''||$("#price").val()==''||$("#pubdate").val()==''||$("#classId").val()==''||$("#pressmark").val()==''||$("#state").val()==''){
-            alert("请填入完整图书信息！");
+    $("#addreader").submit(function () {
+        if($("#readerId").val()==''||$("#name").val()==''){
+            alert("请填入完整读者信息！");
             return mySubmit(false);
         }
     })

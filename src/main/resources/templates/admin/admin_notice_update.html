@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="admin_notice_update_do.html" method="post" class="row">
+                    <form action="admin_notice_update_do.html" id="addnotice" method="post" class="row">
                         <input type="hidden" name="id" th:value="${notice.id}">
                         <div class="form-group col-md-12">
                             <label for="name">通知主题</label>
@@ -68,6 +68,18 @@
     }
     editor.create()
     $('#context').val(editor.txt.html())
+
+</script>
+<script>
+    function mySubmit(flag){
+        return flag;
+    }
+    $("#addnotice").submit(function () {
+        if($("#name").val()==''){
+            alert("请填入通知名称！");
+            return mySubmit(false);
+        }
+    })
 </script>
 </body>
 </html>

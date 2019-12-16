@@ -8,6 +8,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
+    <!--日期选择插件-->
+    <link rel="stylesheet" href="js/bootstrap-datepicker/bootstrap-datepicker3.min.css">
 </head>
 
 <body>
@@ -34,7 +36,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="pubdate">出版时间</label>
-                            <input type="text" class="form-control" id="pubdate" name="pubdate" th:value="${book.pubdate}" placeholder="请输入出版时间" />
+                            <input type="text" class="form-control js-datepicker m-b-10" id="pubdate" name="pubdate" th:value="${book.pubdate}" placeholder="请输入出版时间" />
                         </div>
                         <div class="form-group col-md-12">
                             <label for="isbn">ISBN</label>
@@ -144,5 +146,9 @@
     });
 </script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<!--日期选择插件-->
+<script src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
 </body>
 </html>

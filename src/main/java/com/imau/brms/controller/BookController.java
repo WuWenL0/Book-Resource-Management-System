@@ -29,6 +29,9 @@ public class BookController {
     private BookMapper bookMapper;
 
     @Autowired
+    private ResourceMapper resourceMapper;
+
+    @Autowired
     private ResourseService resourseService;
 
     @Autowired
@@ -104,12 +107,15 @@ public class BookController {
     @GetMapping("/admin/admin_book_delete.html")
     public String adminBookDeleteDo( @RequestParam("bookId")Integer bookId , RedirectAttributes redirectAttributes ){
         try {
+            if (resourceMapper.findResourcesByBookId(bookId).size()!=0){
+                redirectAttributes.addFlashAttribute("error","图书删除失败,请先删除图书对应资源！");
+                return "redirect:/admin/admin_allbooks.html";
+            }
             bookMapper.delete(bookId);
+            redirectAttributes.addFlashAttribute("succ","图书删除成功！");
+            return "redirect:/admin/admin_allbooks.html";
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error","图书删除失败！");
-            return "redirect:/admin/admin_allbooks.html";
-        }finally {
-            redirectAttributes.addFlashAttribute("succ","图书删除成功！");
             return "redirect:/admin/admin_allbooks.html";
         }
     }

@@ -13,7 +13,7 @@
 <body>
 <div class="top">
     <div class="top-context">
-        <img width="250" height="70" src="/horse/logoImg" alt="logo" />
+        <img width="300" height="90" src="/horse/logoImg" alt="logo" />
         <div class="nav">
             <ul>
                 <li><a href="/horse">首页</a></li>
@@ -62,8 +62,9 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <a style="margin: 0 auto;" id="file1" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file1Name}}">浏览文件一</a>
-                                    <script th:inline="javascript">
+                                    <span th:if="${horse.file1Src==null}" th:text="@{${horseCon.file1Name}+'不存在'}"></span>
+                                    <a th:if="${horse.file1Src!=null}" style="margin: 0 auto;" id="file1" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file1Name}}">浏览文件一</a>
+                                    <script th:if="${horse.file1Src!=null}" th:inline="javascript">
                                         $("#file1")
                                             .click(
                                                 function() {
@@ -78,8 +79,9 @@
                                     </script>
                                 </td>
                                 <td>
-                                    <a style="margin: 0 auto;" id="file2" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file2Name}}">浏览文件二</a>
-                                    <script th:inline="javascript">
+                                    <span th:if="${horse.file2Src==null}" th:text="@{${horseCon.file2Name}+'不存在'}"></span>
+                                    <a th:if="${horse.file2Src!=null}" style="margin: 0 auto;" id="file2" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file2Name}}">浏览文件二</a>
+                                    <script  th:if="${horse.file2Src!=null}" th:inline="javascript">
                                         $("#file2")
                                             .click(
                                                 function() {
@@ -94,8 +96,9 @@
                                     </script>
                                 </td>
                                 <td>
-                                    <a style="margin: 0 auto;" id="file3" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file3Name}}">浏览文件三</a>
-                                    <script th:inline="javascript">
+                                    <span th:if="${horse.file3Src==null}" th:text="@{${horseCon.file3Name}+'不存在'}"></span>
+                                    <a th:if="${horse.file3Src!=null}" style="margin: 0 auto;" id="file3" class="btn btn-primary" href="javascript:void(0)" th:text="@{'浏览'+${horseCon.file3Name}}">浏览文件三</a>
+                                    <script  th:if="${horse.file3Src!=null}" th:inline="javascript">
                                         $("#file3")
                                             .click(
                                                 function() {

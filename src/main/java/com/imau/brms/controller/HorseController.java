@@ -139,7 +139,7 @@ public class HorseController {
             redirectAttributes.addFlashAttribute("succ","项目修改成功");
             return "redirect:/admin/admin_allhorse.html";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("succ","项目修改失败");
+            redirectAttributes.addFlashAttribute("error","项目修改失败");
             return "redirect:/admin/admin_allhorse.html";
         }
     }

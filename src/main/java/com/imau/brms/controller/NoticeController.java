@@ -117,12 +117,13 @@ public class NoticeController {
      */
     @Autowired
     private WebConfigMapper webConfigMapper;
+
     @GetMapping("/notice_detail.html")
     public String readerNoticeDetail(Integer id , Model model){
         WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
         model.addAttribute("brms",brms);
         Notice noticeById = noticeMapper.findNoticeById(id);
         model.addAttribute("notice", noticeById);
-        return "/notice_detail";
+        return "notice_detail";
     }
 }

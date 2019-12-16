@@ -41,4 +41,7 @@ public interface ReaderMapper {
 
     @Select("SELECT * FROM db_reader_info WHERE reader_id = #{readerId}")
     ReaderInfo findReaderInfoByReaderId(Long readerId);
+
+    @Update("UPDATE db_reader_card SET name = #{name} WHERE reader_id = #{readerId}")
+    void updateReaderCardName(ReaderCard reader);
 }
