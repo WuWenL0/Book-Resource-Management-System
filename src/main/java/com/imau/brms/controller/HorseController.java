@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Controller
 public class HorseController {
@@ -57,7 +57,8 @@ public class HorseController {
         return "admin/admin_horse_add";
     }
     @RequestMapping("/admin/admin_horse_add_do.html")
-    public String adminAddHorseDo(Horse horse, RedirectAttributes redirectAttributes , HttpServletRequest request , @RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2, @RequestParam("file3") MultipartFile file3){
+    public void adminAddHorseDo(Horse horse, RedirectAttributes redirectAttributes , HttpServletResponse response , @RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2, @RequestParam("file3") MultipartFile file3) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
         try {
             horseMapping.insertInfo(horse);
             if (!file1.isEmpty()){
@@ -73,10 +74,38 @@ public class HorseController {
                 if (!f3.equals("false")) horse.setFile3Src(f3);
             }
             horseMapping.insertFile(horse);
-            redirectAttributes.addFlashAttribute("succ","项目添加成功");
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部项目','admin_allhorse.html',true)</script>"
+            );
+        } catch (Exception e) {
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部项目','admin_allhorse.html',false)</script>"
+            );
+        }
+    }
+    /*
+        管理员删除运动马项目
+     */
+    @RequestMapping("/admin/admin_horse_delete.html")
+    public String adminHorseDeleteDo(Integer id, RedirectAttributes redirectAttributes){
+        try {
+            Horse horseF = horseMapping.findHorseById(id);
+            if (horseF.getFile1Src()!=null){
+                FileUpload.delUploadHorse(horseF.getFile1Src(),horseF.getId());
+            }
+            if (horseF.getFile2Src()!=null){
+                FileUpload.delUploadHorse(horseF.getFile2Src(),horseF.getId());
+            }
+            if (horseF.getFile3Src()!=null){
+                FileUpload.delUploadHorse(horseF.getFile3Src(),horseF.getId());
+            }
+            horseMapping.delete(id);
+            redirectAttributes.addFlashAttribute("succ","项目删除成功");
             return "redirect:/admin/admin_allhorse.html";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("succ","项目添加失败");
+            redirectAttributes.addFlashAttribute("error","项目删除失败");
             return "redirect:/admin/admin_allhorse.html";
         }
     }
@@ -120,7 +149,7 @@ public class HorseController {
             }
             if (!file2.isEmpty()){
                 if (horseF.getFile2Src()!=null){
-                    FileUpload.delUploadHorse(horseF.getFile1Src(),horseF.getId());
+                    FileUpload.delUploadHorse(horseF.getFile2Src(),horseF.getId());
                 }
                 String f2 = FileUpload.fileUploadHorse(file2, horse.getId() , "file2");
                 if (!f2.equals("false")) {
@@ -129,7 +158,7 @@ public class HorseController {
 
             }if (!file3.isEmpty()){
                 if (horseF.getFile3Src()!=null){
-                    FileUpload.delUploadHorse(horseF.getFile1Src(),horseF.getId());
+                    FileUpload.delUploadHorse(horseF.getFile3Src(),horseF.getId());
                 }
                 String f3 = FileUpload.fileUploadHorse(file3, horse.getId() , "file3");
                 if (!f3.equals("false")) {

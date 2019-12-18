@@ -24,6 +24,9 @@ public interface HorseMapper {
     @Select("SELECT * FROM db_sports_horse WHERE id = #{id}")
     Horse findHorseById(Integer id);
 
+    @Delete("DELETE FROM db_sports_horse WHERE id = #{id}")
+    void delete(Integer id);
+
     @Update("UPDATE db_sports_horse SET name = #{name}, author = #{author}, grade = #{grade}, content = #{content}, time = #{time} WHERE id = #{id}")
     void updateInfo(Horse horse);
 

@@ -7,16 +7,18 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
 public interface ReaderMapper {
 
     @Insert("INSERT INTO db_reader_card (reader_id,name,passwd) values ( #{readerId},#{name},#{passwd} )")
-    void insertCard(ReaderCard readerCard);
+    Integer insertCard(ReaderCard readerCard);
 
-    @Insert("INSERT INTO db_reader_info (reader_id,name) values ( #{readerId},#{name} )")
-    void insertInfo(ReaderCard readerCard);
+    @Insert("INSERT INTO db_reader_info (reader_id,name,department,major,grade,class_name) values ( #{readerId},#{name},#{department},#{major},#{grade},#{className} )")
+    Integer insertInfo(ReaderInfo readerInfo);
 
     @Delete("DELETE FROM db_reader_card WHERE reader_id = #{id}")
     void deleteCard(Long id);
@@ -24,14 +26,17 @@ public interface ReaderMapper {
     @Delete("DELETE FROM db_reader_info WHERE reader_id = #{id}")
     void deleteInfo(Long id);
 
-    @Update("UPDATE db_reader_info SET name = #{name} , sex = #{sex} , birth = #{birth} , address = #{address} , telcode = #{telcode} WHERE reader_id = #{readerId}")
-    void updateReaderInfo(ReaderInfo readerInfo);
+    @Update("UPDATE db_reader_info SET name = #{name} , department = #{department} , major = #{major} , grade = #{grade} , class_name = #{className} WHERE reader_id = #{readerId}")
+    Integer updateReaderInfo(ReaderInfo readerInfo);
 
     @Update("UPDATE db_reader_card SET passwd = #{passwd} WHERE reader_id = #{readerId}")
     void changeReaderPassword(Long readerId , String passwd);
 
     @Select("SELECT reader_id,name FROM db_reader_card")
     ArrayList<ReaderCard> selectAllReaderCard();
+
+    @Select("SELECT * FROM db_reader_info")
+    ArrayList<ReaderInfo> selectAllReaderInfo();
 
     @Select("SELECT COUNT(*) FROM db_reader_card WHERE reader_id = #{readerId} and passwd = #{passwd}")
     Integer hasMatchReader(Long readerId , String passwd);
@@ -44,4 +49,23 @@ public interface ReaderMapper {
 
     @Update("UPDATE db_reader_card SET name = #{name} WHERE reader_id = #{readerId}")
     void updateReaderCardName(ReaderCard reader);
+
+    @Select("SELECT COUNT(*) FROM db_reader_card WHERE reader_id = #{readerId}")
+    int selectReaderCard(Long readerId);
+
+    @Select("SELECT COUNT(*) FROM db_reader_info WHERE reader_id = #{readerId}")
+    int selectReaderInfo(Long readerId);
+
+    @Update("UPDATE db_reader_card SET name = #{name} , passwd = #{passwd} WHERE reader_id = #{readerId}")
+    int updateReaderCard(ReaderCard readerCard);
+
+    @Delete({
+            "<script>",
+            "DELETE FROM ${delName} WHERE reader_id in (",
+            "<foreach collection='readerIds' item='item' index='index' separator=','>",
+            "#{item}",
+            "</foreach>", ")</script>"
+    })
+    int batchDelete(String delName , String[] readerIds);
+
 }

@@ -5,20 +5,24 @@ import com.github.pagehelper.PageInfo;
 import com.imau.brms.entity.ReaderCard;
 import com.imau.brms.entity.ReaderInfo;
 import com.imau.brms.mapper.ReaderMapper;
+import com.imau.brms.service.ImportReaderService;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Controller
 public class ReaderController {
@@ -95,10 +99,10 @@ public class ReaderController {
         管理员所有读者列表
      */
     @GetMapping("/admin/admin_allreaders.html")
-    public String toAdminAllReader(Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,@RequestParam(value="pageSize",defaultValue="5")int pageSize){
+    public String toAdminAllReader(Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,@RequestParam(value="pageSize",defaultValue="10")int pageSize){
         PageHelper.startPage(pageNum,pageSize);
-        ArrayList<ReaderCard> readerCards = readerMapper.selectAllReaderCard();
-        PageInfo<ReaderCard> pageInfo =  new PageInfo<ReaderCard>(readerCards);
+        ArrayList<ReaderInfo> readerInfos = readerMapper.selectAllReaderInfo();
+        PageInfo<ReaderInfo> pageInfo =  new PageInfo<ReaderInfo>(readerInfos);
         model.addAttribute("pageInfo",pageInfo);
         return "admin/admin_allreaders";
     }
@@ -111,17 +115,22 @@ public class ReaderController {
         return "admin/admin_reader_add";
     }
     @PostMapping("/admin/admin_reader_add_do.html")
-    public String adminAddReaderDo(ReaderCard readerCard , RedirectAttributes redirectAttributes){
+    public void adminAddReaderDo(ReaderCard readerCard , ReaderInfo readerInfo , HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
         try {
             readerCard.setPasswd("bb8ce661128c8341533f10b34576d49ecac94c0b31edc6864f13bb76171c92e9");//123456
             readerMapper.insertCard(readerCard);
-            readerMapper.insertInfo(readerCard);
+            readerMapper.insertInfo(readerInfo);
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("error","读者添加失败！");
-            return "redirect:/admin/admin_allreaders.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部读者','admin_allreaders.html',false)</script>"
+            );
         }finally {
-            redirectAttributes.addFlashAttribute("succ","读者添加成功！");
-            return "redirect:/admin/admin_allreaders.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部读者','admin_allreaders.html',true)</script>"
+            );
         }
     }
 
@@ -141,7 +150,58 @@ public class ReaderController {
             return "redirect:/admin/admin_allreaders.html";
         }
     }
+    /**
+     * 批量删除读者
+     */
+    @RequestMapping(value = "/admin/admin_reader_batchDelete", method = RequestMethod.POST)
+    public @ResponseBody Object loginCheck(String delNames, HttpServletRequest request){
+        String arrDel[] = delNames.split(",");
+        HashMap<String, String> res = new HashMap<String, String>();
+        try {
+            readerMapper.batchDelete("db_reader_card",arrDel);
+            readerMapper.batchDelete("db_reader_info",arrDel);
+            res.put("stateCode", "1");
+            res.put("msg","批量删除成功！");
+            return res;
+        } catch (Exception e) {
+            res.put("stateCode", "0");
+            res.put("msg","批量删除失败！");
+            return res;
+        }
+    }
 
+    /**
+     * 导入excel
+     */
+    @Autowired
+    private ImportReaderService importReaderService;
 
+    @RequestMapping("/admin/import.html")
+    public String excelImport(@RequestParam(value="file") MultipartFile file , RedirectAttributes redirectAttributes){
+
+        int result = 0;
+
+        try {
+            result = importReaderService.addReader(file);
+        } catch (Exception e) {
+            String error = e.getMessage();
+            if (error.equals("is not text")){
+                redirectAttributes.addFlashAttribute("error","excel单元格类型不是文本类型！");
+                return "redirect:/admin/admin_allreaders.html";
+            }else {
+                redirectAttributes.addFlashAttribute("error","上传失败请检查！");
+                return "redirect:/admin/admin_allreaders.html";
+            }
+        }
+
+        if(result > 0){
+            redirectAttributes.addFlashAttribute("succ","excel文件数据导入成功！");
+            return "redirect:/admin/admin_allreaders.html";
+        }else{
+            redirectAttributes.addFlashAttribute("error","excel文件数据导入成功！");
+            return "redirect:/admin/admin_allreaders.html";
+        }
+
+    }
 
 }

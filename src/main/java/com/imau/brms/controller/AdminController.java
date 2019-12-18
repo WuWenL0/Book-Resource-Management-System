@@ -44,18 +44,23 @@ public class AdminController {
     }
 
     @RequestMapping("/admin/admin_add_do.html")
-    public String adminAddDo(Admin admin , RedirectAttributes redirectAttributes){
+    public void adminAddDo(Admin admin , HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
         try {
             admin.setPassword(new SimpleHash("SHA-256",admin.getPassword(),null,20).toHex());
             System.out.println(admin.getPassword());
             admin.setPerms("admin");
             adminMapper.insert(admin);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error","添加失败！");
-            return "redirect:/admin/admin_alladmins.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部管理员','admin_alladmins.html',false)</script>"
+            );
         }finally {
-            redirectAttributes.addFlashAttribute("succ","添加成功！");
-            return "redirect:/admin/admin_alladmins.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部管理员','admin_alladmins.html',true)</script>"
+            );
         }
     }
     /*

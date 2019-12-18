@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -44,7 +46,8 @@ public class NoticeController {
     }
 
     @PostMapping("/admin/admin_notice_add_do.html")
-    public String adminAddNoticeDo(String name , String context , RedirectAttributes redirectAttributes){
+    public void adminAddNoticeDo(String name , String context , HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
         try {
             Notice notice = new Notice();
             notice.setName(name);
@@ -52,11 +55,15 @@ public class NoticeController {
             notice.setCreatTime(new Date());
             noticeMapper.insert(notice);
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("error","新增通知失败！");
-            return "redirect:/admin/admin_allnotices.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部通知','admin_allnotices.html',false)</script>"
+            );
         }finally {
-            redirectAttributes.addFlashAttribute("succ","新增通知成功！");
-            return "redirect:/admin/admin_allnotices.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部通知','admin_allnotices.html',true)</script>"
+            );
         }
     }
 

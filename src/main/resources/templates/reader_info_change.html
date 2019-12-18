@@ -97,28 +97,24 @@
 
                                 </fieldset>
                                 <fieldset>
-                                    <div class="field-group mdn-select">
-                                        <select name="sex">
-                                            <option value="男" th:selected="${readerInfo.sex=='男'}">男</option>
-                                            <option value="女" th:selected="${readerInfo.sex=='女'}">女</option>
-                                        </select>
-                                        <label class="mdn-label">性别</label>
-                                        <span class="mdn-bar"></span>
-                                    </div>
-
                                     <div class="field-group prepend-icon">
-                                        <input type="text" class="mdn-input" style="padding-left:0px" name="birth" th:value="${#dates.format(readerInfo.birth,'yyyy-MM-dd')}" placeholder="输入生日 格式：年-月-日">
-                                        <label class="mdn-label">生日</label>
+                                        <input type="text" class="mdn-input" style="padding-left:0px" name="department" th:value="${readerInfo.department}" placeholder="输入生日 格式：年-月-日">
+                                        <label class="mdn-label">系部</label>
                                         <span class="mdn-bar"></span>
                                     </div>
                                     <div class="field-group">
-                                        <input type="text" class="mdn-input" name="address" th:value="${readerInfo.address}" placeholder="输入地址">
-                                        <label class="mdn-label">地址</label>
+                                        <input type="text" class="mdn-input" name="major" th:value="${readerInfo.major}" placeholder="输入地址">
+                                        <label class="mdn-label">专业</label>
                                         <span class="mdn-bar"></span>
                                     </div>
                                     <div class="field-group">
-                                        <input type="text" class="mdn-input" name="telcode" th:value="${readerInfo.telcode}" placeholder="+81">
-                                        <label class="mdn-label">手机号</label>
+                                        <input type="text" class="mdn-input" name="grade" th:value="${readerInfo.grade}" placeholder="+81">
+                                        <label class="mdn-label">年级</label>
+                                        <span class="mdn-bar"></span>
+                                    </div>
+                                    <div class="field-group">
+                                        <input type="text" class="mdn-input" name="className" th:value="${readerInfo.className}" placeholder="+81">
+                                        <label class="mdn-label">班级</label>
                                         <span class="mdn-bar"></span>
                                     </div>
                                 </fieldset>

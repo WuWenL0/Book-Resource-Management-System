@@ -33,4 +33,13 @@ public interface BookMapper {
 
     @Select("SELECT COUNT(*) FROM db_book_info WHERE ${searchType} LIKE #{searchWord}")
     Integer queryBookSum(String searchType , String searchWord);
+
+    @Delete({
+            "<script>",
+            "DELETE FROM db_book_info WHERE book_id in (",
+            "<foreach collection='bookIds' item='item' index='index' separator=','>",
+            "#{item}",
+            "</foreach>", ")</script>"
+    })
+    int batchDelete(@Param("bookIds")String[] bookIds);
 }

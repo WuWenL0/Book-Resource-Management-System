@@ -13,14 +13,15 @@ import com.imau.brms.service.ResourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 @Controller
 public class BookController {
@@ -44,16 +45,21 @@ public class BookController {
         return "admin/admin_book_add";
     }
     @PostMapping("/admin/book_add_do.html")
-    public String adminAddBookDo(Book book , RedirectAttributes redirectAttributes){
+    public void adminAddBookDo(Book book , HttpServletResponse response) throws IOException {
         book.setUpdateTime(new Date());
+        response.setContentType("text/html;charset=utf-8");
         try {
             bookMapper.insert(book);
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("error","图书添加失败！");
-            return "redirect:/admin/admin_allbooks.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                    "<script language=javascript>tagcl('全部图书','admin_allbooks.html',false)</script>"
+            );
         }finally {
-            redirectAttributes.addFlashAttribute("succ","图书添加成功！");
-            return "redirect:/admin/admin_allbooks.html";
+            response.getWriter().print(
+                    "<script type='text/javascript' src='js/tag.js'></script>" +
+                            "<script language=javascript>tagcl('全部图书','admin_allbooks.html',true)</script>"
+            );
         }
     }
 
@@ -119,7 +125,42 @@ public class BookController {
             return "redirect:/admin/admin_allbooks.html";
         }
     }
+    /**
+     * 批量删除图书
+     */
+    @RequestMapping(value = "/admin/admin_book_batchDelete", method = RequestMethod.POST)
+    public @ResponseBody Object loginCheck(String delNames, HttpServletRequest request){
+        String arrDel[] = delNames.split(",");
+        String arrDel1 = "";
+        String arrDel2 = "";
+        HashMap<String, String> res = new HashMap<String, String>();
+        try {
+            for (String bookId: arrDel) {
+                if (resourceMapper.findResourcesByBookId(Integer.parseInt(bookId)).size()!=0){
+                    arrDel1+=bookId+",";
+                }else{
+                    arrDel2+=bookId+",";
+                }
+            }
+            if (arrDel1.length()==0){
+                bookMapper.batchDelete(arrDel);
+                res.put("stateCode", "1");
+                res.put("msg","批量删除成功！");
+            }else{
+                String arrDelNames[] = arrDel2.split(",");
+                bookMapper.batchDelete(arrDelNames);
+                res.put("stateCode", "1");
+                res.put("msg","批量删除成功！ID为"+arrDel1+"的图书删除失败，请先删除图书中的资源！");
+            }
 
+
+            return res;
+        } catch (Exception e) {
+            res.put("stateCode", "0");
+            res.put("msg","批量删除失败！");
+            return res;
+        }
+    }
     /*
         读者图书详情页
      */
