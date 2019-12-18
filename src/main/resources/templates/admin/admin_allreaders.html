@@ -168,7 +168,7 @@
     // 打开询问是否删除的模态框并设置需要删除的大修的ID
     function showDeleteModal(obj) {
         var $tds = $(obj).parent().parent().parent().children();// 获取到所有列
-        var delete_id = $($tds[0]).text();// 获取隐藏的ID
+        var delete_id = $($tds[1]).text();// 获取隐藏的ID
         $("#deleteHaulBtn").attr("href","admin_reader_delete.html?readerId="+delete_id);// 将模态框中需要删除的大修的ID设为需要删除的ID
         $("#delcfmOverhaul").modal({
             backdrop : 'static',
