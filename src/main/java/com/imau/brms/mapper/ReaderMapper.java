@@ -38,6 +38,9 @@ public interface ReaderMapper {
     @Select("SELECT * FROM db_reader_info")
     ArrayList<ReaderInfo> selectAllReaderInfo();
 
+    @Select("SELECT * FROM db_reader_info WHERE ${searchWord} LIKE #{keyword}")
+    ArrayList<ReaderInfo> queryAllReaderInfo(String searchWord,String keyword);
+
     @Select("SELECT COUNT(*) FROM db_reader_card WHERE reader_id = #{readerId} and passwd = #{passwd}")
     Integer hasMatchReader(Long readerId , String passwd);
 

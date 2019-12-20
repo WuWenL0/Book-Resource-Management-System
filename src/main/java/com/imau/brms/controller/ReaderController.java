@@ -99,9 +99,19 @@ public class ReaderController {
         管理员所有读者列表
      */
     @GetMapping("/admin/admin_allreaders.html")
-    public String toAdminAllReader(Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,@RequestParam(value="pageSize",defaultValue="10")int pageSize){
+    public String toAdminAllReader(Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,
+                                   @RequestParam(value="pageSize",defaultValue="10")int pageSize,
+                                   @RequestParam(value="searchWord",defaultValue="")String searchWord,
+                                   @RequestParam(value="keyword",defaultValue="")String keyword){
         PageHelper.startPage(pageNum,pageSize);
-        ArrayList<ReaderInfo> readerInfos = readerMapper.selectAllReaderInfo();
+        ArrayList<ReaderInfo> readerInfos;
+        if (!searchWord.equals("")&&!keyword.equals("")){
+            keyword="%"+keyword+"%";
+            readerInfos = readerMapper.queryAllReaderInfo(searchWord,keyword);
+        }else{
+            readerInfos = readerMapper.selectAllReaderInfo();
+        }
+
         PageInfo<ReaderInfo> pageInfo =  new PageInfo<ReaderInfo>(readerInfos);
         model.addAttribute("pageInfo",pageInfo);
         return "admin/admin_allreaders";

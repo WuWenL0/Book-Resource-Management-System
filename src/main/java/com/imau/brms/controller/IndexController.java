@@ -2,7 +2,9 @@ package com.imau.brms.controller;
 
 import com.imau.brms.entity.*;
 import com.imau.brms.mapper.*;
+import com.imau.brms.utils.CountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,14 @@ public class IndexController {
     @Autowired
     private WebConfigMapper webConfigMapper;
 
+
+    @Value("${view.count}")
+    private String txtFilePath;
+
     @GetMapping({"/","/index","/index.html"})
     public String toIndex(Model model){
+        Long count = CountUtil.Get_Visit_Count(txtFilePath);
+        System.out.println(count);
         WebConfig horse = webConfigMapper.findWebConfigByWebName("horse");
         WebConfig brms = webConfigMapper.findWebConfigByWebName("brms");
         model.addAttribute("horse",horse);
@@ -39,6 +47,7 @@ public class IndexController {
         ArrayList<Notice> allNotice = noticeMapper.getAllNotice();
         ArrayList<Resource> downSumSort = resourceMapper.getResourceDownSumSort();
         ArrayList<Book> recommendBooks = bookMapper.getRecommendBooks();
+        model.addAttribute("viewCount",count);
         model.addAttribute("notices", allNotice);
         model.addAttribute("resources", downSumSort);
         model.addAttribute("books", recommendBooks);
