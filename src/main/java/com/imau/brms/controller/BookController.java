@@ -67,9 +67,18 @@ public class BookController {
         管理员获得全部图书列表
      */
     @GetMapping("/admin/admin_allbooks.html")
-    public String toAdminAllBook(Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,@RequestParam(value="pageSize",defaultValue="10")int pageSize){
+    public String toAdminAllBook(Model model,@RequestParam(value="pageNum",defaultValue="1")int pageNum ,
+                                 @RequestParam(value="pageSize",defaultValue="10")int pageSize,
+                                 @RequestParam(value="searchWord",defaultValue="")String searchWord,
+                                 @RequestParam(value="keyword",defaultValue="")String keyword){
         PageHelper.startPage(pageNum,pageSize);
-        ArrayList<Book> allBooks = bookMapper.getAllBooks();
+        ArrayList<Book> allBooks;
+        if (!searchWord.equals("")&&!keyword.equals("")){
+            keyword="%"+keyword+"%";
+            allBooks = bookMapper.queryBook(searchWord,keyword);
+        }else{
+            allBooks = bookMapper.getAllBooks();
+        }
         PageInfo<Book> pageInfo = new PageInfo<Book>(allBooks);
         model.addAttribute("pageInfo",pageInfo);
         return "admin/admin_allbooks";

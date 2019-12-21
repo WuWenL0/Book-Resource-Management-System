@@ -27,6 +27,24 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-toolbar clearfix">
+                    <form class="pull-right search-bar" method="get" action="#!" role="form">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <input type="hidden" name="searchWord" id="search-field" value="name">
+                                <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                                    书名 <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="name">书名</a> </li>
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="author">作者名</a> </li>
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="publish">出版社名称</a> </li>
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="class_id">分类号</a> </li>
+                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="isbn">ISBN</a> </li>
+                                </ul>
+                            </div>
+                            <input type="text" class="form-control" value="" name="keyword" placeholder="请输入">
+                        </div>
+                    </form>
                     <div class="toolbar-btn-action">
                         <button id="btn_add" type="button" class="btn btn-primary m-r-5">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
