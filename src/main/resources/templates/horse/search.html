@@ -115,8 +115,8 @@
             <div class="s-detailed" style="display: block;">
                 <div class="list-left">
                     <a class="t1" style="color: #555;" th:href="@{'horse_detail.html?id='+${horse.id}}" th:text="@{${horseStat.index+1}+'. '+${horse.name}}" target="_blank"></a>
-                    <span th:if="${horse.content.length()<30}" th:utext="${horse.content}"><a th:href="@{'horse_detail.html?id='+${horse.id}}">查看详情>></a></span>
-                    <span th:if="${horse.content.length()>30}" th:utext="@{${#strings.substring(horse.content,0,30)}+'...'}"><a th:href="@{'horse_detail.html?id='+${horse.id}}">查看详情>></a></span>
+                    <span th:if="${horse.content.length()<30}" th:text="${horse.content}"><a th:href="@{'horse_detail.html?id='+${horse.id}}">查看详情>></a></span>
+                    <span th:if="${horse.content.length()>30}" th:text="@{${#strings.substring(horse.content,0,30)}+'...'}"><a th:href="@{'horse_detail.html?id='+${horse.id}}">查看详情>></a></span>
                 </div>
                 <div class="list-center">
                     <span>作者</span>
