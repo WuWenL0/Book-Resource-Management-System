@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imau.brms.entity.Admin;
 import com.imau.brms.mapper.AdminMapper;
+import org.apache.catalina.security.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -103,6 +104,8 @@ public class AdminController {
         response.setContentType("text/html;charset=utf-8");
         try {
             Admin admin = adminMapper.findById(id);
+            oldpasswd = new SimpleHash("SHA-256",oldpasswd,null,20).toHex();
+            newpasswd = new SimpleHash("SHA-256",newpasswd,null,20).toHex();
             if(!admin.getPassword().equals(oldpasswd)){
                 response.getWriter().print("<script language=javascript>alert('旧密码错误,修改密码失败！');window.location='/admin/admin_change_me_password.html'</script>");
             }else{
